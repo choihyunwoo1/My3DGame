@@ -16,16 +16,22 @@ namespace My3DGame.UI
         #region Unity Event Method
         private void OnEnable()
         {
-            //이벤트 등록
-            dialogueManager.openUIDialogEvent += OpenUIDialogue;
-            dialogueManager.closeUIDialogEvent += CloseUIDialog;
+            if (dialogueManager != null)
+            {
+                //이벤트 등록
+                dialogueManager.openUIDialogEvent += OpenUIDialogue;
+                dialogueManager.closeUIDialogEvent += CloseUIDialog;
+            }
         }
 
         private void OnDisable()
         {
-            //이벤트 제거
-            dialogueManager.openUIDialogEvent += OpenUIDialogue;
-            dialogueManager.closeUIDialogEvent += CloseUIDialog;
+            if (dialogueManager != null)
+            {
+                //이벤트 제거
+                dialogueManager.openUIDialogEvent += OpenUIDialogue;
+                dialogueManager.closeUIDialogEvent += CloseUIDialog;
+            }
         }
         #endregion
 

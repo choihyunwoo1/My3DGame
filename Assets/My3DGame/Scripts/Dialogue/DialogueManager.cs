@@ -17,6 +17,8 @@ namespace My3DGame
 
         private Queue<Dialog> _currentDialogs;                          //현재 진행하는 대화
 
+        private int _next;                                              //다음 대화 진행
+
         //이벤트 함수
         public UnityAction<Dialog> openUIDialogEvent;
         public UnityAction closeUIDialogEvent;
@@ -48,6 +50,8 @@ namespace My3DGame
         private void InitDialogue()
         {
             _currentDialogs.Clear();
+
+            _next = -1;
         }
 
         //매개변수로 받은 대화 시작하기
@@ -78,23 +82,48 @@ namespace My3DGame
         }
 
         //큐에서 현재 대화 꺼내어 보여준다
-        private void DisplayDialogueData()
+        public void DisplayDialogueData()
         {
             //_currentDialogs 체크
-            if(_currentDialogs.Count <= 0)
+            if (_currentDialogs.Count <= 0)
+            {
+                if (_next >= 0)
+                {
+                    StartDialogue(_next);
+                }
+                else
+                { 
+                    DialogueEndAndCloseDialogueUI();
+                }
                 return;
+            }
 
             //큐에서 현재 대화 꺼내기
             Dialog dialog = _currentDialogs.Dequeue();
+            _next = dialog.next;
+
             DisplayDialogueLine(dialog);
         }
 
         //매개변수로 받은 대화 보여주기
-        public void DisplayDialogueLine(Dialog dialog)
+        private void DisplayDialogueLine(Dialog dialog)
         {
             if(openUIDialogEvent != null)
             {
                 openUIDialogEvent.Invoke(dialog);
+            }
+        }
+
+        //대화 종료
+        private void DialogueEndAndCloseDialogueUI()
+        {
+            //대화 초기화
+            InitDialogue();
+
+            //UI 닫기
+            if (closeUIDialogEvent != null)
+            { 
+                closeUIDialogEvent.Invoke();
             }
         }
         #endregion
