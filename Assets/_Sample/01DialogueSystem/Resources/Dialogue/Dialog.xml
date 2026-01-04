@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ArrayOfdialog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<dialog>
 		<number>0</number>
 		<character>1</character>
@@ -63,4 +63,4 @@
 		<sentence>I want to enjoy things and have fun and live like every day si the last day</sentence>
 		<next>-1</next>
 	</dialog>
-</root>
+</ArrayOfdialog>

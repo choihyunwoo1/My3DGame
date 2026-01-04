@@ -1,6 +1,6 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 
 namespace My3DGame.UI
@@ -12,29 +12,27 @@ namespace My3DGame.UI
     public class DialogueUIManager : MonoBehaviour
     {
         #region Variables
-        public TextMeshProUGUI _lineText;  //대화 글
-        public TextMeshProUGUI _actorName;  //대화 캐릭터 이름
+        public TextMeshProUGUI _lineText;           //대화 글
+        public TextMeshProUGUI _actorName;          //대화 캐릭터 이름
 
-        public Image _npcImage;  //대화 캐릭터 이미지
-        public GameObject _nextButton;  //다음 액션 버튼 - 다음 대화 보여주기
-
+        public Image _npcImage;                     //대화 캐릭터 이미지
+        public GameObject _nextButton;              //다음 액션 버튼 - 다음 대화 보여주기
         #endregion
 
         #region Custom Method
         //매개변수로 받은 대화로 UI 셋팅
         public void SetDialogue(Dialog dialog)
         {
-            //Debug.Log(dialog.sentence);
             //캐릭터 이미지
             if (_npcImage)
             {
-                if (dialog.character <= 0) //대응되는 이미지가 없다
+                if (dialog.character <= 0)   //대응되는 이미지가 없다
                 {
                     _npcImage.gameObject.SetActive(false);
                 }
-                else
+                else //대응되는 이미지가 있다
                 {
-                    Sprite sprite = ResourcesManager.Load<Sprite>("Dialogue/Npc/npc01" 
+                    Sprite sprite = ResourcesManager.Load<Sprite>("Dialogue/Npc/npc0"
                         + dialog.character.ToString());
                     if (sprite)
                     {
@@ -47,7 +45,10 @@ namespace My3DGame.UI
             //Actor 이름
             _actorName.text = dialog.name;
 
-            //대화
+            //next 버튼
+            _nextButton.SetActive(false);
+
+            //대화 글
             //_lineText.text = dialog.sentence;
             StartCoroutine(TypingSentence(dialog.sentence));
         }
@@ -55,17 +56,17 @@ namespace My3DGame.UI
         //대화글 타이핑 연출
         IEnumerator TypingSentence(string typingText)
         {
-            _lineText.text = "null";
+            _lineText.text = "";
 
             foreach (char latter in typingText)
-            { 
+            {
                 _lineText.text += latter;
                 yield return new WaitForSeconds(0.03f);
             }
 
             //next 버튼
             _nextButton.SetActive(true);
-        } 
+        }
         #endregion
     }
 }

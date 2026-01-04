@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Xml;
+using System.Xml.Serialization;
 using System.Collections.Generic;
+using System.IO;
 
 namespace My3DGame
 {
@@ -13,11 +15,12 @@ namespace My3DGame
         #region Variables
         //대화 데이터
         [SerializeField] private string path = "Dialogue/Dialog";       //xml 파일 경로
-        private XmlNodeList allNodes;                                   //xml 데이터
+        private XmlNodeList allNodes;                                 //xml 데이터
+        private List<Dialog> _allDialogs;                                   //모둔 대화 리스트
 
         private Queue<Dialog> _currentDialogs;                          //현재 진행하는 대화
 
-        private int _next;                                              //다음 대화 진행
+        private int _next;                                              //다음 대화 진행 여부
 
         //이벤트 함수
         public UnityAction<Dialog> openUIDialogEvent;
@@ -31,7 +34,9 @@ namespace My3DGame
             LoadDialogXml();
 
             //데이터 초기화
+            _allDialogs = new List<Dialog>();
             _currentDialogs = new Queue<Dialog>();
+
             InitDialogue();
         }
         #endregion
@@ -50,7 +55,6 @@ namespace My3DGame
         private void InitDialogue()
         {
             _currentDialogs.Clear();
-
             _next = -1;
         }
 
@@ -77,7 +81,7 @@ namespace My3DGame
                 }
             }
 
-            //대화창 보여주기
+            //대화창 보여주기 - 첫번째 대화를 꺼내서 보여준다
             DisplayDialogueData();
         }
 
@@ -85,18 +89,18 @@ namespace My3DGame
         public void DisplayDialogueData()
         {
             //_currentDialogs 체크
-            if (_currentDialogs.Count <= 0)
+            if(_currentDialogs.Count <= 0)
             {
-                if (_next >= 0)
+                if(_next >= 0)
                 {
                     StartDialogue(_next);
                 }
                 else
-                { 
-                    DialogueEndAndCloseDialogueUI();
-                }
+                {
+                    DialogueEndedAndCloseDialogueUI();
+                }   
                 return;
-            }
+            }                
 
             //큐에서 현재 대화 꺼내기
             Dialog dialog = _currentDialogs.Dequeue();
@@ -115,14 +119,14 @@ namespace My3DGame
         }
 
         //대화 종료
-        private void DialogueEndAndCloseDialogueUI()
+        private void DialogueEndedAndCloseDialogueUI()
         {
             //대화 초기화
             InitDialogue();
 
             //UI 닫기
-            if (closeUIDialogEvent != null)
-            { 
+            if(closeUIDialogEvent != null)
+            {
                 closeUIDialogEvent.Invoke();
             }
         }

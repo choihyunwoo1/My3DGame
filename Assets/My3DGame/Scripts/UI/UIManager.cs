@@ -31,7 +31,7 @@ namespace My3DGame.UI
                 //이벤트 제거
                 dialogueManager.openUIDialogEvent += OpenUIDialogue;
                 dialogueManager.closeUIDialogEvent += CloseUIDialog;
-            }
+            }   
         }
         #endregion
 
