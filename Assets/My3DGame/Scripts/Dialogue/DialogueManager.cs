@@ -15,8 +15,8 @@ namespace My3DGame
         #region Variables
         //대화 데이터
         [SerializeField] private string path = "Dialogue/Dialog";       //xml 파일 경로
-        private XmlNodeList allNodes;                                 //xml 데이터
-        private List<Dialog> _allDialogs;                                   //모둔 대화 리스트
+        //private XmlNodeList allNodes;                                 //xml 데이터
+        private List<Dialog> _allDialogs;                               //모든 대화 리스트
 
         private Queue<Dialog> _currentDialogs;                          //현재 진행하는 대화
 
@@ -30,12 +30,12 @@ namespace My3DGame
         #region Unity Event Method
         private void Start()
         {
-            //데이터 읽어오기
-            LoadDialogXml();
-
             //데이터 초기화
             _allDialogs = new List<Dialog>();
             _currentDialogs = new Queue<Dialog>();
+
+            //데이터 읽어오기
+            LoadDialogXml();
 
             InitDialogue();
         }
@@ -44,11 +44,20 @@ namespace My3DGame
         #region Custom Method
         private void LoadDialogXml()
         {
+            //xml xmlDocument
+            /*
             TextAsset asset = ResourcesManager.Load<TextAsset>(path);
-
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(asset.text);
             allNodes = xmlDocument.SelectNodes("root/dialog");
+            */
+            //xml XmlTextReader
+            TextAsset asset = ResourcesManager.Load<TextAsset>(path);
+            using (XmlTextReader reader = new XmlTextReader(new StringReader(asset.text)))
+            {
+                var xs = new XmlSerializer(typeof(List<Dialog>));
+                _allDialogs = (List<Dialog>)xs.Deserialize(reader);
+            }
         }
 
         //다이알로드 초기화
@@ -65,6 +74,8 @@ namespace My3DGame
             InitDialogue();
 
             //_currentDialogs 셋팅
+            //xml xmlDocument
+            /*
             foreach (XmlNode node in allNodes)
             {
                 int num = int.Parse(node["number"].InnerText);
@@ -78,6 +89,15 @@ namespace My3DGame
                     dialog.next = int.Parse(node["next"].InnerText);
 
                     _currentDialogs.Enqueue(dialog);    //큐에 대화 넣기
+                }
+            }
+            */
+            //xml XmlTextReader
+            foreach (var dialog in _allDialogs)
+            {
+                if(dialog.number == dialgoIndex)
+                {
+                    _currentDialogs.Enqueue(dialog);
                 }
             }
 
