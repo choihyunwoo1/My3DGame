@@ -15,7 +15,7 @@ namespace My3DGame.GameData
         public List<string> names;              //이름 리스트
 
         //데이터가 저장되어 있는 경로
-        protected const string dataDirectory = "/My3DGame/ResourcesData/Resources/Data";
+        protected const string dataDirectory = "/My3DGame/ResourcesData/Resources/Data/";
         #endregion
 
         #region Constructor

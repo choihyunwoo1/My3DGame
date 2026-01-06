@@ -55,6 +55,7 @@ namespace My3DGame.GameData
         {
             //데이터 어셋 읽기
             TextAsset asset = ResourcesManager.Load<TextAsset>(dataPath);
+            //파일체크
             if (asset == null || asset.text == null)
             {
                 this.AddData("NewEffect");
