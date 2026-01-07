@@ -1,0 +1,18 @@
+{
+    "clips": [
+        {
+            "id": 0,
+            "name": "EffectCube",
+            "effectType": 0,
+            "effectPath": "EffectData/",
+            "effectFileName": "Effect_Cube"
+        },
+        {
+            "id": 1,
+            "name": "EffectSphere",
+            "effectType": 0,
+            "effectPath": "EffectData/",
+            "effectFileName": "Effect_Sphere"
+        }
+    ]
+}

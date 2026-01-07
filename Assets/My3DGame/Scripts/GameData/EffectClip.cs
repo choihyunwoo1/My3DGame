@@ -1,8 +1,18 @@
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace My3DGame.GameData
 {
+    /// <summary>
+    /// 이펙트 클립(데이터) 리스트를 관리하는 클래스, json파일 저장,불러오기 용도
+    /// </summary>
+    [SerializeField]
+    public class EffectClipData
+    {
+        public List<EffectClip> clips;
+    }
+
     /// <summary>
     /// 이펙트를 관리하는 클래스
     /// 이펙트 데이터 속성 정의

@@ -10,6 +10,7 @@ namespace My3DGame
     {
         #region Variables
         private static EffectData effectData = null;
+        private static SoundData soundData = null;
         #endregion
 
         #region Unity Event Method
@@ -17,6 +18,7 @@ namespace My3DGame
         {
             //데이터 읽어오기
             GetEffectData();
+            GetSoundData();
         }
         #endregion
 
@@ -31,6 +33,18 @@ namespace My3DGame
             }
 
             return effectData;
+        }
+
+        //사운드 데이터 얻어오기
+        public static SoundData GetSoundData()
+        {
+            if (soundData == null)
+            {
+                soundData = ScriptableObject.CreateInstance<SoundData>();
+                soundData.LoadData();
+            }
+
+            return soundData;
         }
         #endregion
     }

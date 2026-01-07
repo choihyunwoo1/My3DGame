@@ -11,4 +11,15 @@ namespace My3DGame
         NORMAL,
 
     }
+
+    /// <summary>
+    /// 사운드 타입 정의
+    /// </summary>
+    public enum SoundType
+    {
+        NONE = -1,
+        MUSIC,
+        SFX,
+    }
+
 }
