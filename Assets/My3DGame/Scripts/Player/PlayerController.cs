@@ -9,28 +9,48 @@ namespace My3DGame
     {
         #region Variables
         //참조
-        protected PlayerInput m_Input;
+        protected PlayerInputReader m_Input;
         protected CharacterController m_CharCtrl;
         protected Animator m_Animator;
+
+        //애니메이터
+        protected AnimatorStateInfo m_CurrentStateInfo;     //현재 애니메이터 상태 정보
+        protected AnimatorStateInfo m_NextStateInfo;        //다음 애니메이터 상태 정보
+        protected bool m_IsAnimatorTransition;              //상태 변경 체크
+        protected AnimatorStateInfo m_PreviousCurrentStateInfo;  //이전 상태
+        protected AnimatorStateInfo m_PreviousNextStateInfo;     //이전 상태
+        protected bool m_PreviousIsAnimatorTransition;           //이전 상태 변경 체크
 
         //Move, Jump
         [SerializeField] protected float maxForwardSpeed = 8f;     //최대 이동 속도
         [SerializeField] protected float gravity = 20f;                            //중력 값
         [SerializeField] protected float minTurnSpeed = 400f;
         [SerializeField] protected float maxTurnSpeed = 1200f;
+        [SerializeField] protected float jumpSpeed = 10f;
 
         protected bool m_IsGrounded = false;
         protected float m_ForwardSpeed;
         protected float m_VerticalSpeed;
         protected float m_DesiredForwardSpeed;
+        protected bool m_ReadyJump = false;
 
         //회전
         protected Quaternion m_TargetRotation;        //회전할 값
         protected float m_AngleDiff;                //
 
+        //대기
+        [SerializeField] protected float idleTimeOut = 5f;  //로코모션에서 5초 타임아웃 되면 대기로 보낸다
+        protected float m_IdleTime = 0f;
+
         //상수 값
-        const float k_GroundAcceleration = 20f;     //가속도 값
-        const float k_GroundDeceleration = 25f;     //감속도 값
+        const float k_GroundAcceleration = 20f;     //이동 시작할때 가속도 값
+        const float k_GroundDeceleration = 25f;     //멈출때 감속도 값
+        const float k_InverseOnEighty = 1f / 180f;      //공중 회전시 연산 계수값
+        const float k_AirbornTurnSpeedProportion = 1.0f; //공중 회전시 연산 계수값
+        const float k_StickingGravityProportion = 0.3f;
+        const float k_GroundedRayDistance = 1f;             //그라운드 체크
+        const float k_JumpAbortSpeed = 10f;             //공중에서 아래로 내려오는 속도
+
 
         //Animator Parameters Hash값
         readonly int m_HashForwardSpeed = Animator.StringToHash("ForwardSpeed");
@@ -61,14 +81,18 @@ namespace My3DGame
         private void Awake()
         {
             //참조
-            m_Input = GetComponent<PlayerInput>();
+            m_Input = GetComponent<PlayerInputReader>();
             m_CharCtrl = GetComponent<CharacterController>();
             m_Animator = GetComponent<Animator>();
         }
 
         private void FixedUpdate()
         {
+            CacheAnimatorState();
+            UpdateInputBlocking();
+
             CalculateForwardMovement();
+            CalculateVerticalMovement();
 
             SetTargetRotaion();
             if (IsMoveInput)
@@ -78,10 +102,72 @@ namespace My3DGame
 
             TimeOutToIdle();
         }
+
+        private void OnAnimatorMove()
+        {
+            Vector3 movement;
+
+            if(m_IsGrounded)
+            {
+                RaycastHit hit;
+                Ray ray = new Ray(transform.position + Vector3.up * k_GroundedRayDistance * 0.5f,
+                    -Vector3.up);
+                if (Physics.Raycast(ray, out hit, k_GroundedRayDistance, Physics.AllLayers,
+                    QueryTriggerInteraction.Ignore))
+                {
+                    movement = Vector3.ProjectOnPlane(m_Animator.deltaPosition, hit.normal);
+                }
+                else
+                {
+                    movement = m_Animator.deltaPosition;
+                }   
+            }
+            else
+            {
+                movement = m_ForwardSpeed * transform.forward * Time.deltaTime;
+            }
+
+            //캐릭터 컨트롤러에 애니메이션 값 적용
+            m_CharCtrl.transform.rotation *= m_Animator.deltaRotation;
+            movement += m_VerticalSpeed * Vector3.up * Time.deltaTime;
+            m_CharCtrl.Move(movement);
+
+            //그라운드
+            m_IsGrounded = m_CharCtrl.isGrounded;
+
+            //애니메이션 적용
+            if (!m_IsGrounded)
+            {
+                m_Animator.SetFloat(m_HashAirbornVerticalSpeed, m_VerticalSpeed);
+            }
+            m_Animator.SetBool(m_HashGrounded, m_IsGrounded);
+        }
         #endregion
 
         #region Custom Method
-        //이동
+        //애니메이션 정보 얻어오기
+        private void CacheAnimatorState()
+        {
+            //이전 상태값 셋팅
+            m_PreviousCurrentStateInfo = m_CurrentStateInfo;
+            m_PreviousNextStateInfo = m_NextStateInfo;
+            m_PreviousIsAnimatorTransition = m_IsAnimatorTransition;
+
+            //layerIndex(0) - baselayer 의 상태 얻어오기
+            m_CurrentStateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
+            m_NextStateInfo = m_Animator.GetNextAnimatorStateInfo(0);
+            m_IsAnimatorTransition = m_Animator.IsInTransition(0);
+        }
+
+        //인풋 블록 체크
+        private void UpdateInputBlocking()
+        {
+            bool inputBlock = m_CurrentStateInfo.tagHash == m_HashBlockInput && !m_IsAnimatorTransition;
+            inputBlock |= m_NextStateInfo.tagHash == m_HashBlockInput;
+            m_Input.playerControllerInputBlocked = inputBlock;
+        }
+
+        //앞뒤좌우 이동
         private void CalculateForwardMovement()
         {
             Vector2 moveInput = m_Input.Movement;
@@ -101,6 +187,42 @@ namespace My3DGame
 
             //애니메이터 적용
             m_Animator.SetFloat(m_HashForwardSpeed, m_ForwardSpeed);
+        }
+
+        //점프 - 위아래 이동
+        private void CalculateVerticalMovement()
+        {
+            //점프 준비 체크
+            if(!m_Input.Jump && m_IsGrounded)
+                m_ReadyJump = true;
+
+            if(m_IsGrounded)
+            {
+                m_VerticalSpeed = -gravity * k_StickingGravityProportion;
+
+                if(m_ReadyJump && m_Input.Jump)
+                {
+                    m_VerticalSpeed = jumpSpeed;
+                    m_IsGrounded = false;
+                    m_ReadyJump = false;
+                }
+            }
+            else
+            {
+                //점프버튼을 Hold하지 않으면 추가 속도 적용
+                if(!m_Input.Jump && m_VerticalSpeed > 0f)
+                {
+                    m_VerticalSpeed -= k_JumpAbortSpeed * Time.deltaTime;
+                }
+
+                if(Mathf.Approximately(m_VerticalSpeed, 0f))
+                {
+                    m_VerticalSpeed = 0f;
+                }
+
+                //
+                m_VerticalSpeed -= gravity * Time.deltaTime;
+            }
         }
 
         //회전 값 얻어오기
@@ -139,7 +261,16 @@ namespace My3DGame
 
         private void UpdateRoation()
         {
+            //애니메이션 적용
             m_Animator.SetFloat(m_HashAngleDelatRad, m_AngleDiff * Mathf.Deg2Rad);
+
+            Vector3 locaclInput = new Vector3(m_Input.Movement.x, 0f, m_Input.Movement.y);            
+            float groundTurnSpeed = Mathf.Lerp(maxTurnSpeed, minTurnSpeed, m_ForwardSpeed / m_DesiredForwardSpeed);
+            //실제 회전속도(ground, air)
+            float actualTurnSpeed = m_IsGrounded ? groundTurnSpeed : groundTurnSpeed *
+                Vector3.Angle(transform.forward, locaclInput) * k_InverseOnEighty * k_AirbornTurnSpeedProportion;
+            m_TargetRotation = Quaternion.RotateTowards(transform.rotation, m_TargetRotation, 
+                actualTurnSpeed * Time.deltaTime);
 
             transform.rotation = m_TargetRotation;
         }
@@ -148,11 +279,28 @@ namespace My3DGame
         //대기 동작 처리
         private void TimeOutToIdle()
         {
-            bool inputDetected = IsMoveInput;
+            bool inputDetected = IsMoveInput || m_Input.Jump;
 
+            if(m_IsGrounded && inputDetected == false)
+            {
+                m_IdleTime += Time.deltaTime;
+                if(m_IdleTime >= idleTimeOut)
+                {
+                    m_Animator.SetTrigger(m_HashTimeoutToIlde);
 
-            //애니메이션 처리
-            m_Animator.SetBool(m_HashInputDetected, inputDetected);
+                    //타이머초기화
+                    m_IdleTime = 0f;
+                }
+            }
+            else
+            {
+                //아이들 타이머 리셋
+                m_IdleTime = 0f;
+                m_Animator.ResetTrigger(m_HashTimeoutToIlde);
+            }
+
+                //애니메이션 처리
+                m_Animator.SetBool(m_HashInputDetected, inputDetected);
         }
         #endregion
     }

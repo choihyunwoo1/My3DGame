@@ -16,11 +16,12 @@ namespace My3DGame
         //protected InputAction moveAction;
 
         //인풋 제어
+        [HideInInspector]
         public bool playerControllerInputBlocked;       //애니메이터 상태 태그에 따라 인풋 블록 제어
         protected bool m_ExternalInputBlocked;          //인풋 블록 제어
 
         //Move, Jump 인풋 값
-        protected Vector2 m_Movement;
+        protected Vector2 m_Movement;        
         protected bool m_Jump;
         #endregion
 

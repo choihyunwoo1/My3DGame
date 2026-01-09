@@ -19026,8 +19026,8 @@ GameObject:
   - component: {fileID: 1664827759}
   - component: {fileID: 1664827758}
   - component: {fileID: 1664827757}
-  - component: {fileID: 1664827761}
   - component: {fileID: 1664827760}
+  - component: {fileID: 1664827761}
   m_Layer: 9
   m_Name: Ellen
   m_TagString: Untagged
@@ -19124,6 +19124,8 @@ MonoBehaviour:
   gravity: 20
   minTurnSpeed: 400
   maxTurnSpeed: 1200
+  jumpSpeed: 10
+  idleTimeOut: 5
 --- !u!114 &1664827761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19133,11 +19135,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1664827756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada431495d2d5c041a3b5ff57fbb05e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f63dd7f610402f448d82c018336d378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: fe46cbeb2af83774394e2edc1619ef55, type: 2}
   playerControllerInputBlocked: 0
-  m_Movement: {x: 0, y: 0}
 --- !u!1 &1684157590
 GameObject:
   m_ObjectHideFlags: 0
