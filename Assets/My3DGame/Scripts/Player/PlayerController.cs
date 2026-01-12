@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 namespace My3DGame
 {
@@ -12,6 +13,7 @@ namespace My3DGame
         protected PlayerInputReader m_Input;
         protected CharacterController m_CharCtrl;
         protected Animator m_Animator;
+        protected CameraSettings m_CameraSettings;
 
         //애니메이터
         protected AnimatorStateInfo m_CurrentStateInfo;     //현재 애니메이터 상태 정보
@@ -84,6 +86,8 @@ namespace My3DGame
             m_Input = GetComponent<PlayerInputReader>();
             m_CharCtrl = GetComponent<CharacterController>();
             m_Animator = GetComponent<Animator>();
+
+            m_CameraSettings = GameObject.FindFirstObjectByType<CameraSettings>();
         }
 
         private void FixedUpdate()
@@ -232,8 +236,12 @@ namespace My3DGame
             Vector3 localMovementDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
             //입력 값에 의한 앞방향 구하기
-            Vector3 forward = Quaternion.Euler(localMovementDirection.x, localMovementDirection.y, 
-                localMovementDirection.z) * Vector3.forward;
+            //Vector3 forward = Quaternion.Euler(localMovementDirection.x, localMovementDirection.y, 
+            //    localMovementDirection.z) * Vector3.forward;
+            //카메라의 앞 방향
+            Vector3 forward = Quaternion.Euler(0f,
+                m_CameraSettings.freeLookCamera.GetComponent<CinemachineOrbitalFollow>().HorizontalAxis.Value,
+                0f) * Vector3.forward;
             forward.y = 0f;
             forward.Normalize();
 

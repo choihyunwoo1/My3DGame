@@ -8,6 +8,7 @@ namespace My3DGame.GameData
 		
         EffectCube = 0,
         EffectSphere = 1,
+        ClickEffect = 2,
 
 	}
 }

@@ -443,6 +443,54 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ClickNMove"",
+            ""id"": ""1ec73bcc-f51d-4d30-8c97-878e792e761a"",
+            ""actions"": [
+                {
+                    ""name"": ""MouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7cddbcf-ca89-41f5-bf9a-ce66660fabc4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""6fa159c0-7603-4ef3-bb5c-7b54f45f55b1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3aa208c1-806e-4c22-b7b9-1fd33f293b8f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2486046-68a2-4ab0-8c25-d9e201cfd303"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -518,12 +566,17 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Submit = m_Menu.FindAction("Submit", throwIfNotFound: true);
         m_Menu_Cancel = m_Menu.FindAction("Cancel", throwIfNotFound: true);
+        // ClickNMove
+        m_ClickNMove = asset.FindActionMap("ClickNMove", throwIfNotFound: true);
+        m_ClickNMove_MouseClick = m_ClickNMove.FindAction("MouseClick", throwIfNotFound: true);
+        m_ClickNMove_MousePosition = m_ClickNMove.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     ~@MyInput()
     {
         UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, MyInput.GamePlay.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Menu.enabled, "This will cause a leak and performance issues, MyInput.Menu.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_ClickNMove.enabled, "This will cause a leak and performance issues, MyInput.ClickNMove.Disable() has not been called.");
     }
 
     /// <summary>
@@ -831,6 +884,113 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="MenuActions" /> instance referencing this action map.
     /// </summary>
     public MenuActions @Menu => new MenuActions(this);
+
+    // ClickNMove
+    private readonly InputActionMap m_ClickNMove;
+    private List<IClickNMoveActions> m_ClickNMoveActionsCallbackInterfaces = new List<IClickNMoveActions>();
+    private readonly InputAction m_ClickNMove_MouseClick;
+    private readonly InputAction m_ClickNMove_MousePosition;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "ClickNMove".
+    /// </summary>
+    public struct ClickNMoveActions
+    {
+        private @MyInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public ClickNMoveActions(@MyInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "ClickNMove/MouseClick".
+        /// </summary>
+        public InputAction @MouseClick => m_Wrapper.m_ClickNMove_MouseClick;
+        /// <summary>
+        /// Provides access to the underlying input action "ClickNMove/MousePosition".
+        /// </summary>
+        public InputAction @MousePosition => m_Wrapper.m_ClickNMove_MousePosition;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_ClickNMove; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="ClickNMoveActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(ClickNMoveActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="ClickNMoveActions" />
+        public void AddCallbacks(IClickNMoveActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ClickNMoveActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ClickNMoveActionsCallbackInterfaces.Add(instance);
+            @MouseClick.started += instance.OnMouseClick;
+            @MouseClick.performed += instance.OnMouseClick;
+            @MouseClick.canceled += instance.OnMouseClick;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="ClickNMoveActions" />
+        private void UnregisterCallbacks(IClickNMoveActions instance)
+        {
+            @MouseClick.started -= instance.OnMouseClick;
+            @MouseClick.performed -= instance.OnMouseClick;
+            @MouseClick.canceled -= instance.OnMouseClick;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="ClickNMoveActions.UnregisterCallbacks(IClickNMoveActions)" />.
+        /// </summary>
+        /// <seealso cref="ClickNMoveActions.UnregisterCallbacks(IClickNMoveActions)" />
+        public void RemoveCallbacks(IClickNMoveActions instance)
+        {
+            if (m_Wrapper.m_ClickNMoveActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="ClickNMoveActions.AddCallbacks(IClickNMoveActions)" />
+        /// <seealso cref="ClickNMoveActions.RemoveCallbacks(IClickNMoveActions)" />
+        /// <seealso cref="ClickNMoveActions.UnregisterCallbacks(IClickNMoveActions)" />
+        public void SetCallbacks(IClickNMoveActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ClickNMoveActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ClickNMoveActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="ClickNMoveActions" /> instance referencing this action map.
+    /// </summary>
+    public ClickNMoveActions @ClickNMove => new ClickNMoveActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -953,5 +1113,27 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCancel(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "ClickNMove" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="ClickNMoveActions.AddCallbacks(IClickNMoveActions)" />
+    /// <seealso cref="ClickNMoveActions.RemoveCallbacks(IClickNMoveActions)" />
+    public interface IClickNMoveActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "MouseClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }
