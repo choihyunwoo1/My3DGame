@@ -15,6 +15,7 @@ namespace My3DGame
         public event UnityAction<Vector2> MoveEvent = delegate { };
         public event UnityAction JumpEvent = delegate { };
         public event UnityAction JumpCanceledEvent = delegate { };
+        public event UnityAction AttackEvent = delegate { };
 
         //MenuActions
         public event UnityAction SubmitEvent = delegate { };
@@ -102,7 +103,8 @@ namespace My3DGame
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            if (context.phase == InputActionPhase.Performed)
+                AttackEvent.Invoke();
         }
 
         public void OnSprint(InputAction.CallbackContext context)

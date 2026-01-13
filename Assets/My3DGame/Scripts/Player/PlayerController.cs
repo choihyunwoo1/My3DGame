@@ -15,6 +15,8 @@ namespace My3DGame
         protected Animator m_Animator;
         protected CameraSettings m_CameraSettings;
 
+        public MeleeWeapon meleeWeapon;
+
         //애니메이터
         protected AnimatorStateInfo m_CurrentStateInfo;     //현재 애니메이터 상태 정보
         protected AnimatorStateInfo m_NextStateInfo;        //다음 애니메이터 상태 정보
@@ -44,6 +46,9 @@ namespace My3DGame
         [SerializeField] protected float idleTimeOut = 5f;  //로코모션에서 5초 타임아웃 되면 대기로 보낸다
         protected float m_IdleTime = 0f;
 
+        //공격
+        protected bool m_InAttack;                          //현재 공격중인지 체크
+
         //상수 값
         const float k_GroundAcceleration = 20f;     //이동 시작할때 가속도 값
         const float k_GroundDeceleration = 25f;     //멈출때 감속도 값
@@ -59,13 +64,16 @@ namespace My3DGame
         readonly int m_HashAirbornVerticalSpeed = Animator.StringToHash("AirbornVerticalSpeed");
         readonly int m_HashAngleDelatRad = Animator.StringToHash("AngleDelatRad");
         readonly int m_HashInputDetected = Animator.StringToHash("InputDetected");
-        readonly int m_HashTimeoutToIlde = Animator.StringToHash("TimeoutToIlde");
+        readonly int m_HashTimeoutToIlde = Animator.StringToHash("TimeoutToIdle");
         readonly int m_HashGrounded = Animator.StringToHash("Grounded");
+        readonly int m_HashMeleeAttack = Animator.StringToHash("MeleeAttack");
 
         //Animator State Hash값
         readonly int m_HashLocomotion = Animator.StringToHash("Locomotion");
         readonly int m_HashAirborn = Animator.StringToHash("Airborn");
         readonly int m_HashLanding = Animator.StringToHash("Landing");
+
+        readonly int m_HashStateTime = Animator.StringToHash("StateTime");
 
         //Animator State Tag Hash값
         readonly int m_HashBlockInput = Animator.StringToHash("BlockInput");
@@ -90,10 +98,18 @@ namespace My3DGame
             m_CameraSettings = GameObject.FindFirstObjectByType<CameraSettings>();
         }
 
+        private void Start()
+        {
+            //초기화
+            meleeWeapon.SetOwner(this.gameObject);
+        }
+
         private void FixedUpdate()
         {
             CacheAnimatorState();
             UpdateInputBlocking();
+
+            UpdateAttack();
 
             CalculateForwardMovement();
             CalculateVerticalMovement();
@@ -169,6 +185,18 @@ namespace My3DGame
             bool inputBlock = m_CurrentStateInfo.tagHash == m_HashBlockInput && !m_IsAnimatorTransition;
             inputBlock |= m_NextStateInfo.tagHash == m_HashBlockInput;
             m_Input.playerControllerInputBlocked = inputBlock;
+        }
+
+        //공격
+        private void UpdateAttack()
+        {
+            m_Animator.ResetTrigger(m_HashMeleeAttack);     //트리거 파라미터 초기화
+            m_Animator.SetFloat(m_HashStateTime, Mathf.Repeat(
+                m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
+            if (m_Input.Attack)
+            {
+                m_Animator.SetTrigger(m_HashMeleeAttack);
+            }
         }
 
         //앞뒤좌우 이동
@@ -287,9 +315,14 @@ namespace My3DGame
         //대기 동작 처리
         private void TimeOutToIdle()
         {
-            bool inputDetected = IsMoveInput || m_Input.Jump;
+            bool inputDetected = IsMoveInput || m_Input.Jump || m_Input.Attack;
 
-            if(m_IsGrounded && inputDetected == false)
+            if (m_Input.Attack)
+            {
+                m_Input.Attack = false;
+            }
+
+            if (m_IsGrounded && inputDetected == false)
             {
                 m_IdleTime += Time.deltaTime;
                 if(m_IdleTime >= idleTimeOut)
@@ -309,6 +342,18 @@ namespace My3DGame
 
                 //애니메이션 처리
                 m_Animator.SetBool(m_HashInputDetected, inputDetected);
+        }
+
+        public void MeleeAttackStart(int throwing = 0)
+        {
+            meleeWeapon.StartAttack(throwing != 0);
+            m_InAttack = true;
+        }
+
+        public void MeleeAttackEnd()
+        {
+            meleeWeapon.EndAttack();
+            m_InAttack = false;
         }
         #endregion
     }

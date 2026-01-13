@@ -19,6 +19,7 @@ namespace My3DGame
         //Move, Jump 인풋 값
         protected Vector2 m_Movement;
         protected bool m_Jump;
+        protected bool m_Attack;
         #endregion
 
         #region Property
@@ -55,6 +56,23 @@ namespace My3DGame
                 m_Jump = value;
             }
         }
+
+        public bool Attack
+        {
+            get
+            {
+                //블록 체크
+                if (playerControllerInputBlocked || m_ExternalInputBlocked)
+                {
+                    return false;
+                }
+                return m_Attack;
+            }
+            set
+            {
+                m_Attack = value;
+            }
+        }
         #endregion
 
         #region Unity Event Method
@@ -67,6 +85,7 @@ namespace My3DGame
             inputReader.MoveEvent += OnMove;
             inputReader.JumpEvent += OnJump;
             inputReader.JumpCanceledEvent += OnJumpCanceled;
+            inputReader.AttackEvent += OnAttack;
         }
 
 
@@ -76,6 +95,7 @@ namespace My3DGame
             inputReader.MoveEvent -= OnMove;
             inputReader.JumpEvent -= OnJump;
             inputReader.JumpCanceledEvent -= OnJumpCanceled;
+            inputReader.AttackEvent -= OnAttack;
         }
         #endregion
 
@@ -93,6 +113,11 @@ namespace My3DGame
         private void OnJumpCanceled()
         {
             Jump = false;
+        }
+
+        private void OnAttack()
+        {
+            Attack = true;
         }
         #endregion
     }

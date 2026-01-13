@@ -32,13 +32,13 @@ namespace My3DGame.Utillity
             if(animator.IsInTransition(0) 
                 && animator.GetCurrentAnimatorStateInfo(0).fullPathHash == stateInfo.fullPathHash)
             {
-                animator.SetInteger(m_HashRandomIdle, 0);
+                animator.SetInteger(m_HashRandomIdle, -1);
             }
 
             //램덤 상태로 보내기
             if(stateInfo.normalizedTime > m_NormalTime && !animator.IsInTransition(0))
             {
-                animator.SetInteger(m_HashRandomIdle, Random.Range(0, numberOfStates) + 1);
+                animator.SetInteger(m_HashRandomIdle, Random.Range(0, numberOfStates));
             }
         }
 
