@@ -5264,6 +5264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115d632aa16478f4b8ec38879f05dd95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _EffectOneShot: {fileID: 11400000, guid: 47bdff0bbe653b049b1278e00e5c25ed, type: 2}
 --- !u!4 &897994841
 Transform:
   m_ObjectHideFlags: 0
@@ -19225,6 +19226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2579c29c76da5ec4f95862883d482db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _EffectOneShot: {fileID: 11400000, guid: 47bdff0bbe653b049b1278e00e5c25ed, type: 2}
   groundLayerMast:
     serializedVersion: 2
     m_Bits: 4294967295

@@ -1,13 +1,15 @@
 using UnityEngine;
 using My3DGame.GameData;
-using My3DGame.Utillity;
 
 namespace My3DGame
 {
-    public class EffectManager : Singleton<EffectManager>
+    public class EffectManager : MonoBehaviour
     {
         #region Variables
         private Transform effectRoot = null;    //생성하는 이펙트 게임오브젝트의 부모 오브젝트
+
+        [Header ("Listening On")]
+        [SerializeField]protected EffectDataChannel150 _EffectOneShot = default;
         #endregion
 
         #region Unity Event Method
@@ -20,6 +22,9 @@ namespace My3DGame
                 effectRoot.SetParent(this.transform);
             }
 
+            //이벤트 채널 이벤트 함수에 등록
+            _EffectOneShot.OnEffectOnShotRaised += EffectOneShot;
+
             //테스트
             //EffectOneShot((int)EffectList.EffectCube, new Vector3(-120, 1, 70));
             //EffectOneShot((int)EffectList.EffectSphere, new Vector3(-122, 1, 70));
@@ -28,9 +33,9 @@ namespace My3DGame
 
         #region Custom Method
         //이펙트 데이터 있는 이펙트를 불러와서 이펙트 생성하기
-        public GameObject EffectOneShot(int index, Vector3 position)
+        public GameObject EffectOneShot(EffectList effectList, Vector3 position)
         {
-            EffectClip clip = DataManager.GetEffectData().GetClip(index);
+            EffectClip clip = DataManager.GetEffectData().GetClip(int);
             GameObject effectInstance = clip.Instantiate(position);
             effectInstance.SetActive(true);
             return effectInstance;

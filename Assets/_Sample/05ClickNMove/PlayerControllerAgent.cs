@@ -27,6 +27,9 @@ namespace MySample
         protected AnimatorStateInfo m_PreviousNextStateInfo;     //이전 상태
         protected bool m_PreviousIsAnimatorTransition;           //이전 상태 변경 체크
 
+        [Header("Broadcasting on")]
+        [SerializeField] protected EffectDataChannelSO _EffectOneShot = default;
+
         //이동
         [SerializeField] protected LayerMask groundLayerMast;
 
@@ -155,8 +158,9 @@ namespace MySample
 
                         //그라운드 클릭 이펙트 효과
                         Vector3 effectPostion = hit.point + new Vector3(0f, 0.05f, 0f);
-                        GameObject effectGo = 
-                            EffectManager.Instance.EffectOneShot((int)EffectList.ClickEffect, effectPostion);
+                        GameObject effectGo =
+                            _EffectOneShot.RaiseEvent(EffectList.ClickEffect, effectPostion);
+                            //EffectManager.Instance.EffectOneShot((int)EffectList.ClickEffect, effectPostion);
                         Destroy(effectGo, 2f);
                     }
 

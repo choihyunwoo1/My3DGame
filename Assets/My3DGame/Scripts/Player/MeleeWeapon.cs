@@ -126,7 +126,8 @@ namespace My3DGame
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
                 return;
 
-            Debug.Log($"TakeDamage {attackDamage}");
+            //Debug.Log($"TakeDamage {attackDamage}");
+            d.TakeDamage(attackDamage);
 
             //hit 이펙트
             if(hitParticlePrefab != null)
