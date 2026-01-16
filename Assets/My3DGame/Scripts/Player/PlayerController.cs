@@ -1,5 +1,6 @@
-using UnityEngine;
+using My3DGame.AI;
 using Unity.Cinemachine;
+using UnityEngine;
 
 namespace My3DGame
 {
@@ -14,6 +15,7 @@ namespace My3DGame
         protected CharacterController m_CharCtrl;
         protected Animator m_Animator;
         protected CameraSettings m_CameraSettings;
+        protected Damageable m_Damageable;
 
         public MeleeWeapon meleeWeapon;
 
@@ -61,12 +63,14 @@ namespace My3DGame
 
         //Animator Parameters Hash값
         readonly int m_HashForwardSpeed = Animator.StringToHash("ForwardSpeed");
-        readonly int m_HashAirbornVerticalSpeed = Animator.StringToHash("AirbornVerticalSpeed");
-        readonly int m_HashAngleDelatRad = Animator.StringToHash("AngleDelatRad");
+        readonly int m_HashAirborneVerticalSpeed = Animator.StringToHash("AirborneVerticalSpeed");
+        readonly int m_HashAngleDelatRad = Animator.StringToHash("AngleDeltaRad");
         readonly int m_HashInputDetected = Animator.StringToHash("InputDetected");
         readonly int m_HashTimeoutToIlde = Animator.StringToHash("TimeoutToIdle");
         readonly int m_HashGrounded = Animator.StringToHash("Grounded");
         readonly int m_HashMeleeAttack = Animator.StringToHash("MeleeAttack");
+        readonly int m_HashHurt = Animator.StringToHash("Hurt");
+        readonly int m_HashDeath = Animator.StringToHash("Death");
 
         //Animator State Hash값
         readonly int m_HashLocomotion = Animator.StringToHash("Locomotion");
@@ -94,8 +98,21 @@ namespace My3DGame
             m_Input = GetComponent<PlayerInputReader>();
             m_CharCtrl = GetComponent<CharacterController>();
             m_Animator = GetComponent<Animator>();
+            m_Damageable = GetComponent<Damageable>();
 
             m_CameraSettings = GameObject.FindFirstObjectByType<CameraSettings>();
+        }
+
+        private void OnEnable()
+        {
+            m_Damageable.OnDamage += OnDamaged;
+            m_Damageable.OnDie += OnDie;
+        }
+
+        private void OnDisable()
+        {
+            m_Damageable.OnDamage -= OnDamaged;
+            m_Damageable.OnDie -= OnDie;
         }
 
         private void Start()
@@ -158,7 +175,7 @@ namespace My3DGame
             //애니메이션 적용
             if (!m_IsGrounded)
             {
-                m_Animator.SetFloat(m_HashAirbornVerticalSpeed, m_VerticalSpeed);
+                m_Animator.SetFloat(m_HashAirborneVerticalSpeed, m_VerticalSpeed);
             }
             m_Animator.SetBool(m_HashGrounded, m_IsGrounded);
         }
@@ -354,6 +371,16 @@ namespace My3DGame
         {
             meleeWeapon.EndAttack();
             m_InAttack = false;
+        }
+
+        private void OnDamaged(float damage)
+        {
+            m_Animator.SetTrigger(m_HashHurt);
+        }
+
+        private void OnDie()
+        {
+            m_Animator.SetTrigger(m_HashDeath);
         }
         #endregion
     }

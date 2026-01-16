@@ -22,4 +22,33 @@ namespace My3DGame
         SFX,
     }
 
+    /// <summary>
+    /// 캐릭터 속성 정의
+    /// </summary>
+    public enum CharacterAttribute
+    {
+        Agility,
+        Intellect,
+        Stamina,
+        Strength,
+        Health,
+        Mana,
+    }
+
+    /// <summary>
+    /// 아이템 종류 정의
+    /// </summary>
+    public enum ItemType
+    {
+        Helmet = 0,
+        Chest = 1,
+        Pants = 2,
+        Boots = 3,
+        Pauldrons = 4,
+        Gloves = 5,
+        LeftWeapon = 6,
+        RightWeapon = 7,
+        Food,
+        Default,
+    }
 }

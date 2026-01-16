@@ -39,6 +39,10 @@ namespace My3DGame
                 _currentHealthSO.SetMaxHealth(_healthConfigSO.InitialHealth);
                 _currentHealthSO.SetCurrentHealth(_healthConfigSO.InitialHealth);
             }
+            else
+            {
+                _currentHealthSO.SetCurrentHealth(_currentHealthSO.MaxHealth);
+            }
         }
 
         private void Update()
@@ -65,6 +69,8 @@ namespace My3DGame
         #region Custom Method
         public void TakeDamage(float damage)
         {
+            Debug.Log($"TakeDamage: {damage}");
+
             //무적 체크
             if (IsInvulnerable)
                 return;
@@ -87,6 +93,7 @@ namespace My3DGame
         private void Die()
         {
             IsDeath = true;
+            Debug.Log($"Die:");
 
             if (OnDie != null) 
                 OnDie.Invoke();

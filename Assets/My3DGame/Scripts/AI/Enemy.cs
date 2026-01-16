@@ -10,6 +10,7 @@ namespace My3DGame.AI
         #region Variables
         //참조
         protected DetectionModule m_DetectionMoudle;
+        protected Damageable m_Damageable;
         public MeleeWeapon meleeWeapon;
 
         //상태 머신
@@ -19,6 +20,9 @@ namespace My3DGame.AI
         [SerializeField] protected float attackRange = 2.0f;
         //공격 딜레이 타임
         [SerializeField] protected float attackDelayTime = 1f;
+
+        //회전 속도 - Lerp 계수
+        [SerializeField] protected float rotateSpeed = 10f;
         #endregion
 
         #region Property
@@ -47,6 +51,19 @@ namespace My3DGame.AI
         {
             //참조
             m_DetectionMoudle = GetComponent<DetectionModule>();
+            m_Damageable = GetComponent<Damageable>();
+        }
+
+        protected virtual void OnEnable()
+        {
+            m_Damageable.OnDamage += OnDamaged;
+            m_Damageable.OnDie += OnDie;
+        }
+
+        protected virtual void OnDisable()
+        {
+            m_Damageable.OnDamage -= OnDamaged;
+            m_Damageable.OnDie -= OnDie;
         }
 
         protected virtual void Start()
@@ -75,19 +92,43 @@ namespace My3DGame.AI
             return stateMachine.ChangeState(newState);
         }
 
-        public void CheckDamage()
+        //타겟을 바라본다
+        public void FaceToTarget()
         {
-            Debug.Log("CheckDamage");
+            //타겟 체크
+            if (Target == null)
+                return;
+
+            //타겟의 방향을 구해 방향에 대한 Rotation을 얻는다
+            Vector3 dir =(Target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, transform.position.y, dir.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, 
+                lookRotation, Time.deltaTime * rotateSpeed);
         }
 
+        //애니메이션 이벤트 함수, 무기 어택 포인트 활성화
         public void MeleeAttackStart(int throwing = 0)
         {
             meleeWeapon.StartAttack(throwing != 0);
         }
 
+        //애니메이션 이벤트 함수, 무기 어택 포인트 비활성화
         public void MeleeAttackEnd()
         {
             meleeWeapon.EndAttack();
+        }
+                
+        private void OnDamaged(float damage)
+        {
+            ChangeState(new IdleState());
+        }
+
+        private void OnDie()
+        {
+            ChangeState(new DeathState());
+
+            //킬
+            Destroy(gameObject, 3f);
         }
         #endregion
     }

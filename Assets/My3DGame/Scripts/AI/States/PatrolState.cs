@@ -17,7 +17,7 @@ namespace My3DGame.AI
 
         //패트롤
         private Transform m_TargetWayPoint = null;  //현재 목표 웨이포인트
-        private int m_WayPointIndex = 0;            //현재 목표 웨이포인트 인덱스
+        private int m_WayPointIndex = -1;            //현재 목표 웨이포인트 인덱스
 
         //애니메이터 파라미터
         readonly int m_HashForwardSpeed = Animator.StringToHash("ForwardSpeed");
@@ -111,7 +111,7 @@ namespace My3DGame.AI
 
             if(WayPoints != null && WayPoints.Length > 0)
             {
-                m_WayPointIndex = (WayPoints.Length + 1) % WayPoints.Length;
+                m_WayPointIndex = (m_WayPointIndex + 1) % WayPoints.Length;
                 m_TargetWayPoint = WayPoints[m_WayPointIndex];
             }
         }

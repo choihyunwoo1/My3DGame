@@ -35,7 +35,7 @@ namespace My3DGame.AI
         //상태 업데이트, 매 프레임 마다 호출
         public override void OnUpdate(float deltaTime)
         {
-
+            enemy.FaceToTarget();
         }
 
         //상태 나가기, 상태를 나갈때 마다 1회 호출
