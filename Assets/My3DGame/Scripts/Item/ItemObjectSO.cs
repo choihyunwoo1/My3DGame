@@ -3,7 +3,7 @@ using UnityEngine;
 namespace My3DGame
 {
     /// <summary>
-    /// 아이템 베이스 데이터를 관리하는 스크립터블 오브젝트 클래스
+    /// 아이템 기본 데이터를 관리하는 스크립터블 오브젝트 클래스
     /// </summary>
     [CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/Item")]
     public class ItemObjectSO : DescriptionBaseSO
@@ -20,6 +20,15 @@ namespace My3DGame
 
         public Sprite icon;                     //아이템 아이콘 이미지
         public GameObject modlePrefab;          //장이 아이템 모델 오브젝트
+        #endregion
+
+        #region Custom Method
+        //아이템 생성하기
+        public Item CreateItem()
+        {
+            Item newItem = new Item(this);
+            return newItem;
+        }
         #endregion
     }
 }

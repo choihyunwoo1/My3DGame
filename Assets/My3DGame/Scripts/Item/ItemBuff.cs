@@ -33,7 +33,10 @@ namespace My3DGame
         //능력치(value) 생성하기
         private void GenerateValue()
         {
-            value = Random.Range(this.min, this.max);
+            if (this.min == this.max)
+                value = this.max;
+            else
+                value = Random.Range(this.min, this.max);
         }
 
         //매개변수로 들어온 값에 ItemBuff가 가지고 있는 value를 더해서 다시 결과를 반환한다
