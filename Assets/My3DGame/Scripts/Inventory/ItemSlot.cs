@@ -60,6 +60,7 @@ namespace My3DGame
             //수량 체크
             if(_amount <= 0)
             {
+                //빈 슬롯 만들기
                 _item = new Item();
             }
 
