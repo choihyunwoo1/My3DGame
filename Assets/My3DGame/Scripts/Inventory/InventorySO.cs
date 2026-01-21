@@ -127,6 +127,7 @@ namespace My3DGame
                 return;
 
             Debug.Log($"{useSlot.item.name} 아이템 효과 구현");
+
             useSlot.AddAmount(-1);
         }
 

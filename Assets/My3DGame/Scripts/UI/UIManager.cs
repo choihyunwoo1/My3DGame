@@ -9,6 +9,11 @@ namespace My3DGame.UI
     public class UIManager : MonoBehaviour
     {
         #region Variables
+        public ItemDataBaseSO itemDataBase;        
+
+        public GameObject backgroundUI;
+        public DynamicInventoryUI playerInventoryUI;
+
         public DialogueManager dialogueManager;
         public DialogueUIManager dialogueUIManager;
         #endregion
@@ -36,6 +41,62 @@ namespace My3DGame.UI
         #endregion
 
         #region Custom Method
+        //매개변수로 받은 UI오브젝트 토글 오픈
+        private void ToggleUI(GameObject uiGameObject)
+        {
+            uiGameObject.SetActive(!uiGameObject.activeSelf);
+
+            if(IsUIOpen())
+            {
+                //Cursor.lockState = CursorLockMode.None;
+                //Cursor.visible = true;
+                Time.timeScale = 0f;
+
+                backgroundUI.SetActive(true);
+            }
+            else
+            {
+                //Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.visible = false;
+                Time.timeScale = 1f;
+
+                backgroundUI.SetActive(false);
+            }
+        }
+
+        //화면에 UI창이 오픈되었는지 체크
+        private bool IsUIOpen()
+        {
+            bool isOpen = false;
+
+            isOpen |= playerInventoryUI.gameObject.activeSelf;
+            isOpen |= dialogueUIManager.gameObject.activeSelf;
+
+            return isOpen;
+        }
+
+        //인벤토리 UI 토글
+        public void TogglePayerInventoryUI()
+        {
+            ToggleUI(playerInventoryUI.gameObject);
+            //창이 닫힐때 이벤트 함수 호출
+            if(playerInventoryUI.gameObject.activeSelf == false)
+            {
+                if(playerInventoryUI._OnCloseUIEvent != null)
+                {
+                    playerInventoryUI._OnCloseUIEvent.Invoke();
+                }
+            }
+        }
+
+        //인벤토리에 아이템 추가 - 치팅
+        public void AddInventoryItem(int index)
+        {
+            Item newItem = itemDataBase.itemObjects[index].CreateItem();
+            playerInventoryUI.AddInventoryItem(newItem, 1);
+        }
+
+
         //대화창 열기
         private void OpenUIDialogue(Dialog dialog)
         {

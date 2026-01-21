@@ -10,8 +10,18 @@ namespace My3DGame.UI
     public class DynamicInventoryUI : InventoryUI
     {
         #region Variables
+        public InventorySO palyerEquipment;
+
         public GameObject slotPrefab;       //슬롯 UI 오브젝트
         public Transform slotsParents;      //생성되는 슬롯 오브젝트의 부모 오브젝트
+        #endregion
+
+        #region Unity Event Method
+        private void Start()
+        {
+            //초기화
+            isEquipInven = false;
+        }
         #endregion
 
         #region Custom Method
@@ -37,6 +47,59 @@ namespace My3DGame.UI
                 inventoryObejct.Slots[i].slotUI = go;
                 slotUIs.Add(go, inventoryObejct.Slots[i]);
             }
+        }
+
+        //인벤토리에 아이템 넣기, 슬롯 체크하지 않는다
+        public bool AddInventoryItem(Item newItem, int amount)
+        {
+            return inventoryObejct.AddItem(newItem, amount);
+        }
+
+        //아이템 사용하기
+        public void UseItem()
+        {
+            //선택된 슬롯 체크
+            if (selectSlotObect == null)
+                return;
+
+            //소모품 사용
+            inventoryObejct.UseItem(slotUIs[selectSlotObect]);
+
+            //선택 해제
+            UpdateSelectSlot(null);
+        }
+
+        //아이템 장착하기
+        public void EquipItem()
+        {
+            //선택된 슬롯 체크
+            if (selectSlotObect == null)
+                return;
+
+            //아이템 장착하기
+            //Debug.Log($"선택된 아이템을 장착합니다");
+            palyerEquipment.EquipItem(slotUIs[selectSlotObect]);
+
+            //선택 해제
+            UpdateSelectSlot(null);
+        }
+
+        //아이템 판매하기
+        public void SellItem()
+        {
+            //선택된 슬롯 체크
+            if (selectSlotObect == null)
+                return;
+
+            //아이템 판매
+            int sellPrice = (int)(slotUIs[selectSlotObect].ItemObject.shopPrice / 2);
+            Debug.Log($"{sellPrice} 골드를 받고 아이템을 버린다");
+
+            //슬롯에서 아이템 제거
+            slotUIs[selectSlotObect].AddAmount(-1);
+
+            //선택 해제
+            UpdateSelectSlot(null);
         }
         #endregion
     }

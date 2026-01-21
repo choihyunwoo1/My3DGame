@@ -15,22 +15,22 @@ MonoBehaviour:
   container:
     slots:
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
-      allowedItems: 
+      allowedItems: 00000000
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
-      allowedItems: 
+      allowedItems: 0600000007000000
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
-      allowedItems: 
+      allowedItems: 03000000
   database: {fileID: 11400000, guid: 1b84be68f1475284490fb60ea18b22bc, type: 2}
   inventoryType: 1

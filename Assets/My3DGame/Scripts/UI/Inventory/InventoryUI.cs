@@ -21,7 +21,13 @@ namespace My3DGame.UI
         public Dictionary<GameObject, ItemSlot> slotUIs = new Dictionary<GameObject, ItemSlot>();
 
         //슬롯 선택
+        public ItemInfoUI itemInfoUI;
         protected GameObject selectSlotObect = null;        //선택된 슬롯 오브젝트
+
+        [SerializeField] protected bool isEquipInven = false;
+
+        //창 닫기
+        public UnityAction _OnCloseUIEvent;
         #endregion
 
         #region abstract
@@ -54,6 +60,8 @@ namespace My3DGame.UI
             //슬롯 선택 초기화
             UpdateSelectSlot(null);
 
+            //이벤트 함수 등록
+            _OnCloseUIEvent += CloseInventoryUI;
         }
         #endregion
 
@@ -76,8 +84,23 @@ namespace My3DGame.UI
         //슬롯 오브젝트 선택
         public void UpdateSelectSlot(GameObject go)
         {
+            //아이템 설명창 오픈 체크
+            if (selectSlotObect != null)
+            {
+                itemInfoUI.CloseItemInfoUI();
+                _OnCloseUIEvent -= itemInfoUI.CloseItemInfoUI;
+            }
+
             //선택된 슬롯 오브젝트 저장
             selectSlotObect = go;
+
+            //선택한 슬롯에 아이템이 있으면 설명창을 연다
+            if (selectSlotObect != null)
+            {
+                itemInfoUI.OpenItemInfoUI();
+                itemInfoUI.SetItemInfoUI(slotUIs[go], isEquipInven);
+                _OnCloseUIEvent += itemInfoUI.CloseItemInfoUI;
+            }
 
             //선택된 슬롯 선택 이미지 활성화
             foreach (KeyValuePair<GameObject, ItemSlot> slot in slotUIs)
@@ -94,6 +117,21 @@ namespace My3DGame.UI
                     {
                         itemSlotUI.SelectSlot(false);
                     }
+                }
+            }
+        }
+
+        //인벤토리 UI 닫기
+        private void CloseInventoryUI()
+        {
+            selectSlotObect = null;
+            //모든 슬롯 비활성화
+            foreach (KeyValuePair<GameObject, ItemSlot> slot in slotUIs)
+            {
+                ItemSlotUI itemSlotUI = slot.Key.GetComponent<ItemSlotUI>();
+                if (itemSlotUI)
+                {
+                    itemSlotUI.SelectSlot(false);
                 }
             }
         }
