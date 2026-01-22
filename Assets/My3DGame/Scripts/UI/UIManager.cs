@@ -9,13 +9,20 @@ namespace My3DGame.UI
     public class UIManager : MonoBehaviour
     {
         #region Variables
+        //참조
+        public InputReader inputReader;
         public ItemDataBaseSO itemDataBase;        
 
         public GameObject backgroundUI;
         public DynamicInventoryUI playerInventoryUI;
+        public StaticInventoryUI playerEquipmentUI;
 
         public DialogueManager dialogueManager;
         public DialogueUIManager dialogueUIManager;
+
+        [Header("Listening On")]
+        public VoidEventChannelSO _ToggleInventoryUIEvent;
+        public VoidEventChannelSO _ToggleEquipmentUIEevent;
         #endregion
 
         #region Unity Event Method
@@ -27,6 +34,9 @@ namespace My3DGame.UI
                 dialogueManager.openUIDialogEvent += OpenUIDialogue;
                 dialogueManager.closeUIDialogEvent += CloseUIDialog;
             }
+
+            _ToggleInventoryUIEvent.OnEventRaised += TogglePayerInventoryUI;
+            _ToggleEquipmentUIEevent.OnEventRaised += ToggelPlayerEquipmentUI;
         }
 
         private void OnDisable()
@@ -34,9 +44,12 @@ namespace My3DGame.UI
             if (dialogueManager != null)
             {
                 //이벤트 제거
-                dialogueManager.openUIDialogEvent += OpenUIDialogue;
-                dialogueManager.closeUIDialogEvent += CloseUIDialog;
-            }   
+                dialogueManager.openUIDialogEvent -= OpenUIDialogue;
+                dialogueManager.closeUIDialogEvent -= CloseUIDialog;
+            }
+
+            _ToggleInventoryUIEvent.OnEventRaised -= TogglePayerInventoryUI;
+            _ToggleEquipmentUIEevent.OnEventRaised -= ToggelPlayerEquipmentUI;
         }
         #endregion
 
@@ -50,17 +63,19 @@ namespace My3DGame.UI
             {
                 //Cursor.lockState = CursorLockMode.None;
                 //Cursor.visible = true;
-                Time.timeScale = 0f;
-
+                inputReader.EnableMenuInput();
                 backgroundUI.SetActive(true);
+
+                Time.timeScale = 0f;
             }
             else
             {
                 //Cursor.lockState = CursorLockMode.Locked;
                 //Cursor.visible = false;
-                Time.timeScale = 1f;
-
+                inputReader.EnableGamePlayInput();
                 backgroundUI.SetActive(false);
+
+                Time.timeScale = 1f;
             }
         }
 
@@ -70,6 +85,7 @@ namespace My3DGame.UI
             bool isOpen = false;
 
             isOpen |= playerInventoryUI.gameObject.activeSelf;
+            isOpen |= playerEquipmentUI.gameObject.activeSelf;
             isOpen |= dialogueUIManager.gameObject.activeSelf;
 
             return isOpen;
@@ -78,6 +94,7 @@ namespace My3DGame.UI
         //인벤토리 UI 토글
         public void TogglePayerInventoryUI()
         {
+            Debug.Log("TogglePayerInventoryUI");
             ToggleUI(playerInventoryUI.gameObject);
             //창이 닫힐때 이벤트 함수 호출
             if(playerInventoryUI.gameObject.activeSelf == false)
@@ -85,6 +102,20 @@ namespace My3DGame.UI
                 if(playerInventoryUI._OnCloseUIEvent != null)
                 {
                     playerInventoryUI._OnCloseUIEvent.Invoke();
+                }
+            }
+        }
+
+        //장비 장착창 UI 토글
+        public void ToggelPlayerEquipmentUI()
+        {
+            ToggleUI(playerEquipmentUI.gameObject);
+            //창이 닫힐때 이벤트 함수 호출
+            if (playerEquipmentUI.gameObject.activeSelf == false)
+            {
+                if (playerEquipmentUI._OnCloseUIEvent != null)
+                {
+                    playerEquipmentUI._OnCloseUIEvent.Invoke();
                 }
             }
         }

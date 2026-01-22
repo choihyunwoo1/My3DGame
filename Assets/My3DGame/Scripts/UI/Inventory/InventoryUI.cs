@@ -28,6 +28,12 @@ namespace My3DGame.UI
 
         //창 닫기
         public UnityAction _OnCloseUIEvent;
+
+        [Header("Broadcasting On")]
+        public GameObejctEventChannelSO _OnUpdateDeselectSlot;
+
+        [Header("Listening On")]
+        public GameObejctEventChannelSO _OnUpdateSelectSlot;
         #endregion
 
         #region abstract
@@ -36,7 +42,7 @@ namespace My3DGame.UI
         #endregion
 
         #region Unity Event Method
-        protected void Awake()
+        protected virtual void Awake()
         {
             //슬롯 오브젝트 생성
             CreateSlots();
@@ -60,8 +66,25 @@ namespace My3DGame.UI
             //슬롯 선택 초기화
             UpdateSelectSlot(null);
 
+            //인벤토리UI 오브젝트의 트리거에 이벤트 등록
+            AddEvent(this.gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(this.gameObject); });
+            AddEvent(this.gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(this.gameObject); });
+
             //이벤트 함수 등록
             _OnCloseUIEvent += CloseInventoryUI;
+        }
+
+        protected virtual void OnEnable()
+        {
+            //이벤트 함수 등록
+            _OnUpdateSelectSlot.OnEventRaised += UpdateSelectSlot;
+        }
+
+        protected virtual void OnDisable()
+        {
+            //이벤트 함수 등록
+            
+            _OnUpdateSelectSlot.OnEventRaised -= UpdateSelectSlot;
         }
         #endregion
 
@@ -124,7 +147,15 @@ namespace My3DGame.UI
         //인벤토리 UI 닫기
         private void CloseInventoryUI()
         {
+            //아이템 설명창 오픈 체크
+            if (selectSlotObect != null)
+            {
+                itemInfoUI.CloseItemInfoUI();
+                _OnCloseUIEvent -= itemInfoUI.CloseItemInfoUI;
+            }
+
             selectSlotObect = null;
+
             //모든 슬롯 비활성화
             foreach (KeyValuePair<GameObject, ItemSlot> slot in slotUIs)
             {
@@ -237,6 +268,9 @@ namespace My3DGame.UI
         //슬롯 UI 오브젝트를 마우스 선택시 호출
         public void OnClick(GameObject go)
         {
+            //다른 인벤토리UI 선택을 해제 UpdateSelectSlot(null)
+            _OnUpdateDeselectSlot.RaisedEvent(null);
+
             //선택한 게임오브젝트에서 슬롯 얻어오기
             ItemSlot itemSlot = slotUIs[go];
 

@@ -491,6 +491,74 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""HotKey"",
+            ""id"": ""abb7a54e-3b41-49b4-b8b7-a3cd3be50c5f"",
+            ""actions"": [
+                {
+                    ""name"": ""HotKey1"",
+                    ""type"": ""Button"",
+                    ""id"": ""6e154421-a69e-4039-9e24-0f31644b5e40"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotKey2"",
+                    ""type"": ""Button"",
+                    ""id"": ""75664f4b-f1d0-4330-9bbd-711fb1a44913"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotKey3"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b513bf5-48f5-4d4e-aa4d-8698311a04b9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6f706c57-57ff-4860-a005-8f9574006fda"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""HotKey1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b2b04b8-aa1c-4acc-9e73-f8b7f632f782"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""HotKey2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0ebb889-d26d-4d7a-bca6-80905f10813b"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotKey3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -570,6 +638,11 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         m_ClickNMove = asset.FindActionMap("ClickNMove", throwIfNotFound: true);
         m_ClickNMove_MouseClick = m_ClickNMove.FindAction("MouseClick", throwIfNotFound: true);
         m_ClickNMove_MousePosition = m_ClickNMove.FindAction("MousePosition", throwIfNotFound: true);
+        // HotKey
+        m_HotKey = asset.FindActionMap("HotKey", throwIfNotFound: true);
+        m_HotKey_HotKey1 = m_HotKey.FindAction("HotKey1", throwIfNotFound: true);
+        m_HotKey_HotKey2 = m_HotKey.FindAction("HotKey2", throwIfNotFound: true);
+        m_HotKey_HotKey3 = m_HotKey.FindAction("HotKey3", throwIfNotFound: true);
     }
 
     ~@MyInput()
@@ -577,6 +650,7 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, MyInput.GamePlay.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Menu.enabled, "This will cause a leak and performance issues, MyInput.Menu.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_ClickNMove.enabled, "This will cause a leak and performance issues, MyInput.ClickNMove.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_HotKey.enabled, "This will cause a leak and performance issues, MyInput.HotKey.Disable() has not been called.");
     }
 
     /// <summary>
@@ -991,6 +1065,124 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="ClickNMoveActions" /> instance referencing this action map.
     /// </summary>
     public ClickNMoveActions @ClickNMove => new ClickNMoveActions(this);
+
+    // HotKey
+    private readonly InputActionMap m_HotKey;
+    private List<IHotKeyActions> m_HotKeyActionsCallbackInterfaces = new List<IHotKeyActions>();
+    private readonly InputAction m_HotKey_HotKey1;
+    private readonly InputAction m_HotKey_HotKey2;
+    private readonly InputAction m_HotKey_HotKey3;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "HotKey".
+    /// </summary>
+    public struct HotKeyActions
+    {
+        private @MyInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public HotKeyActions(@MyInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "HotKey/HotKey1".
+        /// </summary>
+        public InputAction @HotKey1 => m_Wrapper.m_HotKey_HotKey1;
+        /// <summary>
+        /// Provides access to the underlying input action "HotKey/HotKey2".
+        /// </summary>
+        public InputAction @HotKey2 => m_Wrapper.m_HotKey_HotKey2;
+        /// <summary>
+        /// Provides access to the underlying input action "HotKey/HotKey3".
+        /// </summary>
+        public InputAction @HotKey3 => m_Wrapper.m_HotKey_HotKey3;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_HotKey; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="HotKeyActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(HotKeyActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="HotKeyActions" />
+        public void AddCallbacks(IHotKeyActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HotKeyActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HotKeyActionsCallbackInterfaces.Add(instance);
+            @HotKey1.started += instance.OnHotKey1;
+            @HotKey1.performed += instance.OnHotKey1;
+            @HotKey1.canceled += instance.OnHotKey1;
+            @HotKey2.started += instance.OnHotKey2;
+            @HotKey2.performed += instance.OnHotKey2;
+            @HotKey2.canceled += instance.OnHotKey2;
+            @HotKey3.started += instance.OnHotKey3;
+            @HotKey3.performed += instance.OnHotKey3;
+            @HotKey3.canceled += instance.OnHotKey3;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="HotKeyActions" />
+        private void UnregisterCallbacks(IHotKeyActions instance)
+        {
+            @HotKey1.started -= instance.OnHotKey1;
+            @HotKey1.performed -= instance.OnHotKey1;
+            @HotKey1.canceled -= instance.OnHotKey1;
+            @HotKey2.started -= instance.OnHotKey2;
+            @HotKey2.performed -= instance.OnHotKey2;
+            @HotKey2.canceled -= instance.OnHotKey2;
+            @HotKey3.started -= instance.OnHotKey3;
+            @HotKey3.performed -= instance.OnHotKey3;
+            @HotKey3.canceled -= instance.OnHotKey3;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="HotKeyActions.UnregisterCallbacks(IHotKeyActions)" />.
+        /// </summary>
+        /// <seealso cref="HotKeyActions.UnregisterCallbacks(IHotKeyActions)" />
+        public void RemoveCallbacks(IHotKeyActions instance)
+        {
+            if (m_Wrapper.m_HotKeyActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="HotKeyActions.AddCallbacks(IHotKeyActions)" />
+        /// <seealso cref="HotKeyActions.RemoveCallbacks(IHotKeyActions)" />
+        /// <seealso cref="HotKeyActions.UnregisterCallbacks(IHotKeyActions)" />
+        public void SetCallbacks(IHotKeyActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HotKeyActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HotKeyActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="HotKeyActions" /> instance referencing this action map.
+    /// </summary>
+    public HotKeyActions @HotKey => new HotKeyActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1135,5 +1327,34 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMousePosition(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "HotKey" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="HotKeyActions.AddCallbacks(IHotKeyActions)" />
+    /// <seealso cref="HotKeyActions.RemoveCallbacks(IHotKeyActions)" />
+    public interface IHotKeyActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "HotKey1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotKey2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotKey3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey3(InputAction.CallbackContext context);
     }
 }

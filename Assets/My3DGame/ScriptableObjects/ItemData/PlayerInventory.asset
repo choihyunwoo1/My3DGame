@@ -21,10 +21,14 @@ MonoBehaviour:
       amount: 0
       allowedItems: 
     - item:
-        id: -1
-        name: 
-        buffs: []
-      amount: 0
+        id: 0
+        name: Helmet
+        buffs:
+        - stat: 2
+          value: 6
+          min: 5
+          max: 10
+      amount: 1
       allowedItems: 
     - item:
         id: -1
@@ -33,10 +37,28 @@ MonoBehaviour:
       amount: 0
       allowedItems: 
     - item:
-        id: -1
-        name: 
-        buffs: []
-      amount: 0
+        id: 1
+        name: Shose
+        buffs:
+        - stat: 1
+          value: 12
+          min: 7
+          max: 13
+      amount: 1
+      allowedItems: 
+    - item:
+        id: 2
+        name: Sowrd
+        buffs:
+        - stat: 0
+          value: 7
+          min: 6
+          max: 12
+        - stat: 3
+          value: 11
+          min: 10
+          max: 15
+      amount: 1
       allowedItems: 
     - item:
         id: -1
@@ -45,22 +67,24 @@ MonoBehaviour:
       amount: 0
       allowedItems: 
     - item:
-        id: -1
-        name: 
-        buffs: []
-      amount: 0
+        id: 3
+        name: RedPotion
+        buffs:
+        - stat: 4
+          value: 100
+          min: 100
+          max: 100
+      amount: 6
       allowedItems: 
     - item:
-        id: -1
-        name: 
-        buffs: []
-      amount: 0
-      allowedItems: 
-    - item:
-        id: -1
-        name: 
-        buffs: []
-      amount: 0
+        id: 4
+        name: BluePotion
+        buffs:
+        - stat: 5
+          value: 50
+          min: 50
+          max: 50
+      amount: 5
       allowedItems: 
     - item:
         id: -1
@@ -112,3 +136,4 @@ MonoBehaviour:
       allowedItems: 
   database: {fileID: 11400000, guid: 1b84be68f1475284490fb60ea18b22bc, type: 2}
   inventoryType: 0
+  filePath: /Inventory.json

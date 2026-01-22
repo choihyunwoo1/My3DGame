@@ -1329,6 +1329,8 @@ MonoBehaviour:
   inventoryObejct: {fileID: 11400000, guid: dd9adef62e8126543a19c40fff4b675b, type: 2}
   itemInfoUI: {fileID: 4569772007160536770}
   isEquipInven: 0
+  _OnUpdateDeselectSlot: {fileID: 0}
+  _OnUpdateSelectSlot: {fileID: 0}
   palyerEquipment: {fileID: 11400000, guid: a54fde322c851ef4eb4a0b46f01d0c8e, type: 2}
   slotPrefab: {fileID: 5597343729870011623, guid: fc06271a97a13d74494acb9bec39bbcd, type: 3}
   slotsParents: {fileID: 7797005244110838700}
@@ -1807,6 +1809,8 @@ MonoBehaviour:
   inventoryObejct: {fileID: 11400000, guid: a54fde322c851ef4eb4a0b46f01d0c8e, type: 2}
   itemInfoUI: {fileID: 4569772007160536770}
   isEquipInven: 1
+  _OnUpdateDeselectSlot: {fileID: 0}
+  _OnUpdateSelectSlot: {fileID: 0}
   playerInventory: {fileID: 11400000, guid: dd9adef62e8126543a19c40fff4b675b, type: 2}
   staticSlot:
   - {fileID: 8285257728069799793}
@@ -3399,11 +3403,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4847904eda49c54ba6c431dc60ad0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: fe46cbeb2af83774394e2edc1619ef55, type: 2}
   itemDataBase: {fileID: 11400000, guid: 1b84be68f1475284490fb60ea18b22bc, type: 2}
   backgroundUI: {fileID: 797724722832250665}
   playerInventoryUI: {fileID: 7427454878147502990}
+  playerEquipmentUI: {fileID: 1431713037933328408}
   dialogueManager: {fileID: 0}
   dialogueUIManager: {fileID: 7042619474497313810}
+  _ToggleInventoryUIEvent: {fileID: 11400000, guid: e045e1d131904b1418a1d5001d286532, type: 2}
+  _ToggleEquipmentUIEevent: {fileID: 11400000, guid: 395fe41145a3c954aa781e876f7fef81, type: 2}
 --- !u!1 &6416579922052888460
 GameObject:
   m_ObjectHideFlags: 0

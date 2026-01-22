@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace My3DGame
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Game/InputReader")]
-    public class InputReader : ScriptableObject, MyInput.IGamePlayActions, MyInput.IMenuActions, MyInput.IClickNMoveActions
+    public class InputReader : ScriptableObject, MyInput.IGamePlayActions, MyInput.IMenuActions, MyInput.IClickNMoveActions, MyInput.IHotKeyActions
     {
         #region Variables
         //참조
@@ -24,6 +24,11 @@ namespace My3DGame
         //ClickNMoveActions
         public event UnityAction ClickEvent = delegate { };
         public event UnityAction<Vector2> MousePositionEvent = delegate { };
+
+        //HotKey Actions
+        [Header("BroadCasting On")]
+        public VoidEventChannelSO _ToggleInventoryUIEvent;
+        public VoidEventChannelSO _ToggleEquipmentUIEevent;
         #endregion
 
         #region Unity Event Mehtod
@@ -37,6 +42,7 @@ namespace My3DGame
                 myInput.GamePlay.SetCallbacks(this);
                 myInput.Menu.SetCallbacks(this);
                 myInput.ClickNMove.SetCallbacks(this);
+                myInput.HotKey.SetCallbacks(this);
             }
         }
 
@@ -53,6 +59,7 @@ namespace My3DGame
             myInput.GamePlay.Disable();
             myInput.Menu.Disable();
             myInput.ClickNMove.Disable();
+            myInput.HotKey.Disable();
         }
 
         //GamePlay 액션맵 활성화
@@ -63,6 +70,7 @@ namespace My3DGame
 
             //활성화
             myInput.GamePlay.Enable();
+            myInput.HotKey.Enable();
         }
 
         //Menu 액션맵 활성화
@@ -73,6 +81,7 @@ namespace My3DGame
 
             //활성화
             myInput.Menu.Enable();
+            myInput.HotKey.Enable();
         }
 
         //ClickNMove 액션 맵 활성화
@@ -137,6 +146,27 @@ namespace My3DGame
         public void OnMousePosition(InputAction.CallbackContext context)
         {
             MousePositionEvent.Invoke(context.ReadValue<Vector2>());
+        }
+        #endregion
+
+        #region HotKey Actions
+        public void OnHotKey1(InputAction.CallbackContext context)
+        {
+            //플레이어 인벤토리 창을 연다
+            if (context.phase == InputActionPhase.Performed)
+                _ToggleInventoryUIEvent.RaisedEvent();
+        }
+
+        public void OnHotKey2(InputAction.CallbackContext context)
+        {
+            //플레이어 장비 장착창을 연다
+            if (context.phase == InputActionPhase.Performed)
+                _ToggleEquipmentUIEevent.RaisedEvent();
+        }
+
+        public void OnHotKey3(InputAction.CallbackContext context)
+        {
+            
         }
         #endregion
     }

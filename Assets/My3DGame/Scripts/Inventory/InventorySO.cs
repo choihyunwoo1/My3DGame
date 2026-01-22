@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.IO;
 
 namespace My3DGame
 {
@@ -143,6 +144,40 @@ namespace My3DGame
                     break;
                 }
             }
+        }
+        #endregion
+
+        //인벤토리 데이터를 json파일 저장하기, 로드하기
+        #region Save/Load Methods
+        public string filePath = "/Inventory.json";
+
+        [ContextMenu("Save")]
+        public void Save()
+        {
+            //디바이스 저장 경로
+            string path = Application.persistentDataPath + filePath;
+            string jsonOutput = JsonUtility.ToJson(container, true);
+            Debug.Log(jsonOutput);
+            File.WriteAllText(path, jsonOutput);
+        }
+
+        [ContextMenu("Load")]
+        public void Load()
+        {
+            //디바이스 저장 경로
+            string path = Application.persistentDataPath + filePath;
+            if(File.Exists(path))
+            {
+                string jsonInput = File.ReadAllText(path);
+                JsonUtility.FromJsonOverwrite(jsonInput, container);
+            }
+        }
+
+        //인벤토리 비우기
+        [ContextMenu("Clear")]
+        public void Clear()
+        {
+            container.Clear();
         }
         #endregion
 
