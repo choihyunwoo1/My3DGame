@@ -51,15 +51,11 @@ namespace My3DGame.UI
             if (inventoryObejct != null)
             {
                 for (int i = 0; i < inventoryObejct.Slots.Length; i++)
-                {
-                    inventoryObejct.Slots[i].parents = inventoryObejct;
+                {                    
                     inventoryObejct.Slots[i].OnPostUpdate += OnPostUpdate;
 
                     //강제로 슬롯 업데이트 실행
-                    if(inventoryObejct.Slots[i].OnPostUpdate != null )
-                    {
-                        inventoryObejct.Slots[i].OnPostUpdate.Invoke(inventoryObejct.Slots[i]);
-                    }
+                    OnPostUpdate(inventoryObejct.Slots[i]);
                 }
             }
 

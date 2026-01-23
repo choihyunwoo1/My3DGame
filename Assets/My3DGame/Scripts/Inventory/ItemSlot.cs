@@ -64,6 +64,7 @@ namespace My3DGame
                 _item = new Item();
             }
 
+            //기존에 있는 아이템 능력치를 제거하는 기능
             if (OnPreUpdate != null)
             {
                 OnPreUpdate.Invoke(this);
@@ -72,6 +73,7 @@ namespace My3DGame
             this.item = _item;
             this.amount = _amount;
 
+            //새로 갱신되는 아이템의 능력치를 적용하는 기능
             if(OnPostUpdate != null)
             {
                 OnPostUpdate.Invoke(this);

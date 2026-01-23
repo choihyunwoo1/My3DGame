@@ -10,9 +10,11 @@ namespace My3DGame
     public class Damageable : MonoBehaviour
     {
         #region Variables
+        public StatsSO playerStats;
+
         [Header("Health")]
         [SerializeField] protected HealthConfigSO _healthConfigSO;
-        [SerializeField] protected HealthSO _currentHealthSO;
+        protected HealthSO _currentHealthSO;
 
         //무적 타이머
         [SerializeField] protected float invulnerabiltyTime = 0.5f;
@@ -32,16 +34,18 @@ namespace My3DGame
         #region Unity Event Method
         private void Awake()
         {
-            //CurrentHealth 체크 및 설정
-            if(_currentHealthSO == null)
+            //playerStats 체크 및 설정
+            if (playerStats != null) //플레이어
+            {
+                _currentHealthSO = ScriptableObject.CreateInstance<HealthSO>();
+                _currentHealthSO.SetMaxHealth(playerStats.MaxHealth);
+                _currentHealthSO.SetCurrentHealth(playerStats.MaxHealth);
+            }
+            else //Enemy
             {
                 _currentHealthSO = ScriptableObject.CreateInstance<HealthSO>();
                 _currentHealthSO.SetMaxHealth(_healthConfigSO.InitialHealth);
                 _currentHealthSO.SetCurrentHealth(_healthConfigSO.InitialHealth);
-            }
-            else
-            {
-                _currentHealthSO.SetCurrentHealth(_currentHealthSO.MaxHealth);
             }
         }
 
@@ -81,6 +85,11 @@ namespace My3DGame
             _currentHealthSO.InflictDamage(damage);
             Debug.Log($"CurrentHealth: {_currentHealthSO.CurrentHealth}");
 
+            if (playerStats != null) //플레이어
+            {
+                playerStats.SetCurrentHealth((int)_currentHealthSO.CurrentHealth);
+            }
+
             if (OnDamage != null)
                 OnDamage.Invoke(damage);
 
@@ -112,6 +121,12 @@ namespace My3DGame
         public void Revive()
         {
             _currentHealthSO.SetCurrentHealth(_currentHealthSO.MaxHealth);
+
+            if (playerStats != null) //플레이어
+            {
+                playerStats.SetCurrentHealth((int)_currentHealthSO.MaxHealth);
+            }
+
             IsDeath = false;
         }
 
@@ -123,6 +138,11 @@ namespace My3DGame
                 return;
 
             _currentHealthSO.RestoreHealth(healthAdd);
+
+            if (playerStats != null) //플레이어
+            {
+                playerStats.SetCurrentHealth((int)_currentHealthSO.CurrentHealth);
+            }
         }
         #endregion
     }

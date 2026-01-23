@@ -40,6 +40,16 @@ namespace My3DGame
         }
         #endregion
 
+        #region Unity Event Method
+        private void OnEnable()
+        {
+            for (int i = 0; i < Slots.Length; i++)
+            {
+                Slots[i].parents = this;
+            }
+        }
+        #endregion
+
         #region Custom Method
         //인벤토리에 아이템 추가하기
         public bool AddItem(Item item, int amount)

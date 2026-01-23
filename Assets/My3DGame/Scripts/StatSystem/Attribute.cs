@@ -12,5 +12,11 @@ namespace My3DGame
     {
         public CharacterAttribute type;
         public ModifiableInt value;
+
+        //생성자
+        public Attribute(CharacterAttribute _type)
+        {
+            type = _type;
+        }
     }
 }
