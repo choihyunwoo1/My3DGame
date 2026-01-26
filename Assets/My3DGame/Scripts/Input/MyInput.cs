@@ -127,6 +127,15 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa82dd11-0234-421f-a7a0-5327a553a629"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -393,6 +402,39 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60356fb7-1404-4116-87ea-eb03d6f474f4"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08050eca-1a2d-482b-8bff-85aecf689e6f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2cb99fcb-cb17-4742-b3d2-16341d557648"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -630,6 +672,7 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         m_GamePlay_Attack = m_GamePlay.FindAction("Attack", throwIfNotFound: true);
         m_GamePlay_Jump = m_GamePlay.FindAction("Jump", throwIfNotFound: true);
         m_GamePlay_Sprint = m_GamePlay.FindAction("Sprint", throwIfNotFound: true);
+        m_GamePlay_Interact = m_GamePlay.FindAction("Interact", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Submit = m_Menu.FindAction("Submit", throwIfNotFound: true);
@@ -730,6 +773,7 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Attack;
     private readonly InputAction m_GamePlay_Jump;
     private readonly InputAction m_GamePlay_Sprint;
+    private readonly InputAction m_GamePlay_Interact;
     /// <summary>
     /// Provides access to input actions defined in input action map "GamePlay".
     /// </summary>
@@ -757,6 +801,10 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "GamePlay/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_GamePlay_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "GamePlay/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_GamePlay_Interact;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -795,6 +843,9 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         /// <summary>
@@ -818,6 +869,9 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         /// <summary>
@@ -1283,6 +1337,13 @@ public partial class @MyInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menu" which allows adding and removing callbacks.

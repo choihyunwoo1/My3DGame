@@ -61,4 +61,26 @@ namespace My3DGame
         Equipment,      //장착형
         Shop,           //상점용
     }
+
+    /// <summary>
+    /// 대화 타입 정의
+    /// </summary>
+    public enum DialogType
+    {
+        None = -1,
+        Quest,
+        Shop,
+    }
+
+    /// <summary>
+    /// NPC 타입  정의
+    /// </summary>
+    public enum NpcType
+    {
+        None = -1,
+        Merchant,
+        BlackSmith,
+        SkillMaster,
+        QuestGiver,
+    }
 }

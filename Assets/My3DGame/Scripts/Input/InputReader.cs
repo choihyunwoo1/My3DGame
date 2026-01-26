@@ -16,6 +16,8 @@ namespace My3DGame
         public event UnityAction JumpEvent = delegate { };
         public event UnityAction JumpCanceledEvent = delegate { };
         public event UnityAction AttackEvent = delegate { };
+        [Header("BroadCasting On")]
+        public VoidEventChannelSO _InteractEvent;   //인터랙티브 기능
 
         //MenuActions
         public event UnityAction SubmitEvent = delegate { };
@@ -119,6 +121,12 @@ namespace My3DGame
         public void OnSprint(InputAction.CallbackContext context)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Performed)
+                _InteractEvent.RaisedEvent();
         }
         #endregion
 

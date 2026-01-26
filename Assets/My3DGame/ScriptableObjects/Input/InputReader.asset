@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6bbb8791eea6349b8dcf6cad5ac640, type: 3}
   m_Name: InputReader
   m_EditorClassIdentifier: 
+  _InteractEvent: {fileID: 11400000, guid: 06fda8373ceac7d47bc4c2828ef125f7, type: 2}
   _ToggleInventoryUIEvent: {fileID: 11400000, guid: e045e1d131904b1418a1d5001d286532, type: 2}
   _ToggleEquipmentUIEevent: {fileID: 11400000, guid: 395fe41145a3c954aa781e876f7fef81, type: 2}

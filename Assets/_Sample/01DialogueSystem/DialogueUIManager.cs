@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-namespace My3DGame.UI
+namespace MySample
 {
     /// <summary>
     /// DialogueUI를 관리하는 클래스
@@ -32,7 +32,7 @@ namespace My3DGame.UI
                 }
                 else //대응되는 이미지가 있다
                 {
-                    Sprite sprite = ResourcesManager.Load<Sprite>("Dialogue/Npc/npc0"
+                    Sprite sprite = My3DGame.ResourcesManager.Load<Sprite>("Dialogue/Npc/npc0"
                         + dialog.character.ToString());
                     if (sprite)
                     {

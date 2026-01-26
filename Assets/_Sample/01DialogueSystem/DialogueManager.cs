@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
 
-namespace My3DGame
+
+namespace MySample
 {
     /// <summary>
     /// 대화를 관리하는 클래스
@@ -52,7 +53,7 @@ namespace My3DGame
             allNodes = xmlDocument.SelectNodes("root/dialog");
             */
             //xml XmlTextReader
-            TextAsset asset = ResourcesManager.Load<TextAsset>(path);
+            TextAsset asset = My3DGame.ResourcesManager.Load<TextAsset>(path);
             using (XmlTextReader reader = new XmlTextReader(new StringReader(asset.text)))
             {
                 var xs = new XmlSerializer(typeof(List<Dialog>));

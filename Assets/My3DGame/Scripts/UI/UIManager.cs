@@ -13,43 +13,35 @@ namespace My3DGame.UI
         public InputReader inputReader;
         public ItemDataBaseSO itemDataBase;        
 
+        //UI
         public GameObject backgroundUI;
         public DynamicInventoryUI playerInventoryUI;
         public StaticInventoryUI playerEquipmentUI;
-
-        public DialogueManager dialogueManager;
-        public DialogueUIManager dialogueUIManager;
+        public DialogUI dialogUI;
+        public ActionUI actionUI;
 
         [Header("Listening On")]
         public VoidEventChannelSO _ToggleInventoryUIEvent;
         public VoidEventChannelSO _ToggleEquipmentUIEevent;
+        public DialogEventChannelSO _ToggleDialogUIEvent;
+        public StringEventChannelSO _ToggleActionUIEvent;
         #endregion
 
         #region Unity Event Method
         private void OnEnable()
         {
-            if (dialogueManager != null)
-            {
-                //이벤트 등록
-                dialogueManager.openUIDialogEvent += OpenUIDialogue;
-                dialogueManager.closeUIDialogEvent += CloseUIDialog;
-            }
-
             _ToggleInventoryUIEvent.OnEventRaised += TogglePayerInventoryUI;
             _ToggleEquipmentUIEevent.OnEventRaised += ToggelPlayerEquipmentUI;
+            _ToggleDialogUIEvent.OnEventRaised += ToggleDialogUI;
+            _ToggleActionUIEvent.OnEventRaised += ToggleActionUI;
         }
 
         private void OnDisable()
         {
-            if (dialogueManager != null)
-            {
-                //이벤트 제거
-                dialogueManager.openUIDialogEvent -= OpenUIDialogue;
-                dialogueManager.closeUIDialogEvent -= CloseUIDialog;
-            }
-
             _ToggleInventoryUIEvent.OnEventRaised -= TogglePayerInventoryUI;
             _ToggleEquipmentUIEevent.OnEventRaised -= ToggelPlayerEquipmentUI;
+            _ToggleDialogUIEvent.OnEventRaised -= ToggleDialogUI;
+            _ToggleActionUIEvent.OnEventRaised -= ToggleActionUI;
         }
         #endregion
 
@@ -86,7 +78,7 @@ namespace My3DGame.UI
 
             isOpen |= playerInventoryUI.gameObject.activeSelf;
             isOpen |= playerEquipmentUI.gameObject.activeSelf;
-            isOpen |= dialogueUIManager.gameObject.activeSelf;
+            isOpen |= dialogUI.gameObject.activeSelf;
 
             return isOpen;
         }
@@ -127,19 +119,35 @@ namespace My3DGame.UI
             playerInventoryUI.AddInventoryItem(newItem, 1);
         }
 
-
-        //대화창 열기
-        private void OpenUIDialogue(Dialog dialog)
+        //대화창 열기 토글
+        public void ToggleDialogUI(Dialog dialog)
         {
-            dialogueUIManager.gameObject.SetActive(true);
-            //dialog 대화창 셋팅
-            dialogueUIManager.SetDialogue(dialog);
+            if(dialog == null)
+            {
+                ToggleUI(dialogUI.gameObject);
+            }
+            else
+            {
+                if (dialogUI.gameObject.activeSelf == false)
+                {
+                    ToggleUI(dialogUI.gameObject);
+                }
+                dialogUI.SetDialogue(dialog);
+            }
         }
 
-        //대화창 닫기
-        private void CloseUIDialog()
+        //액션 UI 토글 기능
+        public void ToggleActionUI(string action)
         {
-            dialogueUIManager.gameObject.SetActive(false);
+            if(action == string.Empty)
+            {
+                actionUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                actionUI.gameObject.SetActive(true);
+            }
+            actionUI.SetActionUI(action);
         }
         #endregion
     }

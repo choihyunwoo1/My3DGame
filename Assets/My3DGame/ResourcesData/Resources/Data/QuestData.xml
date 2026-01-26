@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ArrayOfQuestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<QuestData>
+		<number>0</number>
+		<npcNumber>0</npcNumber>
+		<name>Kill Zombie</name>
+		<description>Kill Zombie 1</description>
+		<startDialog>3</startDialog>
+		<ingDialog>4</ingDialog>
+		<endDialog>5</endDialog>
+		<level>1</level>
+		<questType>Kill</questType>
+		<goalIndex>0</goalIndex>
+		<goalAmount>1</goalAmount>
+		<rewardGold>100</rewardGold>
+		<rewardExp>350</rewardExp>
+		<rewardItem>-1</rewardItem>
+	</QuestData>
+	<QuestData>
+		<number>1</number>
+		<npcNumber>0</npcNumber>
+		<name>Collect Ammo Box</name>
+		<description>Collect Ammo Box 2</description>
+		<startDialog>6</startDialog>
+		<ingDialog>7</ingDialog>
+		<endDialog>8</endDialog>
+		<level>2</level>
+		<questType>Collect</questType>
+		<goalIndex>0</goalIndex>
+		<goalAmount>2</goalAmount>
+		<rewardGold>150</rewardGold>
+		<rewardExp>250</rewardExp>
+		<rewardItem>3</rewardItem>
+	</QuestData>
+	<QuestData>
+		<number>2</number>
+		<npcNumber>1</npcNumber>
+		<name>Kill Zombie</name>
+		<description>Kill Zombie 1</description>
+		<startDialog>3</startDialog>
+		<ingDialog>4</ingDialog>
+		<endDialog>5</endDialog>
+		<level>4</level>
+		<questType>Kill</questType>
+		<goalIndex>0</goalIndex>
+		<goalAmount>1</goalAmount>
+		<rewardGold>100</rewardGold>
+		<rewardExp>350</rewardExp>
+		<rewardItem>-1</rewardItem>
+	</QuestData>
+	<QuestData>
+		<number>3</number>
+		<npcNumber>1</npcNumber>
+		<name>Collect Ammo Box</name>
+		<description>Collect Ammo Box 2</description>
+		<startDialog>6</startDialog>
+		<ingDialog>7</ingDialog>
+		<endDialog>6</endDialog>
+		<level>5</level>
+		<questType>Collect</questType>
+		<goalIndex>0</goalIndex>
+		<goalAmount>2</goalAmount>
+		<rewardGold>150</rewardGold>
+		<rewardExp>250</rewardExp>
+		<rewardItem>4</rewardItem>
+	</QuestData>
+</ArrayOfQuestData>
