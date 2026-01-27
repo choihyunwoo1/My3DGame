@@ -31,13 +31,13 @@ namespace My3DGame
         #endregion
 
         #region Unity Event Method
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             zoneTriggerController._EnterZone += ToggleActionUI;
             _InteractEvent.OnEventRaised += DoAction;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             zoneTriggerController._EnterZone -= ToggleActionUI;
             _InteractEvent.OnEventRaised += DoAction;

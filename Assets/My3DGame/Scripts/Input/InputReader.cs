@@ -31,6 +31,7 @@ namespace My3DGame
         [Header("BroadCasting On")]
         public VoidEventChannelSO _ToggleInventoryUIEvent;
         public VoidEventChannelSO _ToggleEquipmentUIEevent;
+        public VoidEventChannelSO _ToggleQuestUIEvent;
         #endregion
 
         #region Unity Event Mehtod
@@ -174,7 +175,9 @@ namespace My3DGame
 
         public void OnHotKey3(InputAction.CallbackContext context)
         {
-            
+            //퀘스트 정보창을 연다
+            if (context.phase == InputActionPhase.Performed)
+                _ToggleQuestUIEvent.RaisedEvent();
         }
         #endregion
     }

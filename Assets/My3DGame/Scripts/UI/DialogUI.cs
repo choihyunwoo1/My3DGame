@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace My3DGame
@@ -15,6 +16,9 @@ namespace My3DGame
         public TextMeshProUGUI _actorName;          //대화 캐릭터 이름
         
         public GameObject _nextButton;              //다음 액션 버튼 - 다음 대화 보여주기
+
+        //창 닫기
+        public UnityAction _OnCloseUIEvent;
         #endregion
 
         #region Custom Method

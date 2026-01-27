@@ -83,4 +83,28 @@ namespace My3DGame
         SkillMaster,
         QuestGiver,
     }
+
+
+    /// <summary>
+    /// 퀘스트 타입 정의
+    /// </summary>
+    public enum QuestType
+    {
+        None = -1,
+        Kill,
+        Collect,
+
+    }
+
+    /// <summary>
+    /// 퀘스트 상태 정의
+    /// </summary>
+    public enum QusetState
+    {
+        None = -1,
+        Ready,              //퀘스트 수락 이전 상태(아직 진행하지 않은 상태)
+        Accept,             //퀘스트 수락한 상태(진행중)
+        Complete,           //퀘스트 목표를 완료한 상태(진행중, 아직 보상을 안받은 상태)
+        Rewarded,           //퀘스트 보상 받은 상태
+    }
 }

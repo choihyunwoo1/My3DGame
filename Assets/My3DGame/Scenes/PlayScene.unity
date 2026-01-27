@@ -2688,50 +2688,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3067485136624685243, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067485136624685243, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067485136624685243, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067485136624685243, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067485136624685243, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067485136624685243, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3403909960427699384, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: expText
-      value: 
-      objectReference: {fileID: 2096202109}
-    - target: {fileID: 3403909960427699384, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: manaBar
-      value: 
-      objectReference: {fileID: 1413176405}
-    - target: {fileID: 3403909960427699384, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: goldText
-      value: 
-      objectReference: {fileID: 1183278197}
-    - target: {fileID: 3403909960427699384, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 603341445}
-    - target: {fileID: 3403909960427699384, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: levelText
-      value: 
-      objectReference: {fileID: 1604743565}
     - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2808,14 +2764,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7618060892188575107, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: dialogueManager
+    - target: {fileID: 8036465692388434782, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
+      propertyPath: _OnSetCurrentQuest
       value: 
-      objectReference: {fileID: 529922890}
-    - target: {fileID: 7618060892188575107, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: _ToggleActionUIEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: 89c6b78ee31856441800da13614fdf71, type: 2}
+      objectReference: {fileID: 11400000, guid: ea534afa2513c8e40bbd83facb9c9073, type: 2}
     - target: {fileID: 8908169419851327101, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3194,17 +3146,6 @@ Transform:
   - {fileID: 2096850194}
   m_Father: {fileID: 1664827759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &603341445 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7196939674902273895, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-  m_PrefabInstance: {fileID: 510665467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &612699937
 GameObject:
   m_ObjectHideFlags: 0
@@ -12011,17 +11952,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &1183278197 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5326878444057672522, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-  m_PrefabInstance: {fileID: 510665467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1193760009
 GameObject:
   m_ObjectHideFlags: 0
@@ -18474,17 +18404,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7554016445846434940, guid: c1e802a45b16940a380cdbb69b30cd32, type: 3}
   m_PrefabInstance: {fileID: 1408538946}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1413176405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3252206820289190958, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-  m_PrefabInstance: {fileID: 510665467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1413468420
 GameObject:
   m_ObjectHideFlags: 0
@@ -19435,17 +19354,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &1604743565 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5362061341714180238, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-  m_PrefabInstance: {fileID: 510665467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1611810541
 GameObject:
   m_ObjectHideFlags: 0
@@ -22372,17 +22280,6 @@ Transform:
   - {fileID: 983847329}
   m_Father: {fileID: 376033880}
   m_LocalEulerAnglesHint: {x: -89.972015, y: 115.12029, z: 0}
---- !u!114 &2096202109 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 311731888680753741, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-  m_PrefabInstance: {fileID: 510665467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2096850193
 GameObject:
   m_ObjectHideFlags: 0
@@ -25402,6 +25299,9 @@ MonoBehaviour:
   _ToggleActionUIEvent: {fileID: 11400000, guid: 89c6b78ee31856441800da13614fdf71, type: 2}
   _StartDialogEvent: {fileID: 11400000, guid: 09d212b9cddc6d5448695ba02c817dbb, type: 2}
   _InteractEvent: {fileID: 11400000, guid: 06fda8373ceac7d47bc4c2828ef125f7, type: 2}
+  questObejct: {fileID: 11400000, guid: 7c337039b59da5349922d1940d885842, type: 2}
+  quests: []
+  _OnSetCurrentQuest: {fileID: 11400000, guid: ea534afa2513c8e40bbd83facb9c9073, type: 2}
 --- !u!4 &6493268603444665246
 Transform:
   m_ObjectHideFlags: 0

@@ -19,12 +19,14 @@ namespace My3DGame.UI
         public StaticInventoryUI playerEquipmentUI;
         public DialogUI dialogUI;
         public ActionUI actionUI;
+        public QuestUI questUI;
 
         [Header("Listening On")]
         public VoidEventChannelSO _ToggleInventoryUIEvent;
         public VoidEventChannelSO _ToggleEquipmentUIEevent;
         public DialogEventChannelSO _ToggleDialogUIEvent;
         public StringEventChannelSO _ToggleActionUIEvent;
+        public VoidEventChannelSO _ToggleQuestUIEvent;
         #endregion
 
         #region Unity Event Method
@@ -34,6 +36,7 @@ namespace My3DGame.UI
             _ToggleEquipmentUIEevent.OnEventRaised += ToggelPlayerEquipmentUI;
             _ToggleDialogUIEvent.OnEventRaised += ToggleDialogUI;
             _ToggleActionUIEvent.OnEventRaised += ToggleActionUI;
+            _ToggleQuestUIEvent.OnEventRaised += ToggleQuestUI;
         }
 
         private void OnDisable()
@@ -42,6 +45,7 @@ namespace My3DGame.UI
             _ToggleEquipmentUIEevent.OnEventRaised -= ToggelPlayerEquipmentUI;
             _ToggleDialogUIEvent.OnEventRaised -= ToggleDialogUI;
             _ToggleActionUIEvent.OnEventRaised -= ToggleActionUI;
+            _ToggleQuestUIEvent.OnEventRaised -= ToggleQuestUI;
         }
         #endregion
 
@@ -79,6 +83,7 @@ namespace My3DGame.UI
             isOpen |= playerInventoryUI.gameObject.activeSelf;
             isOpen |= playerEquipmentUI.gameObject.activeSelf;
             isOpen |= dialogUI.gameObject.activeSelf;
+            isOpen |= questUI.gameObject.activeSelf;
 
             return isOpen;
         }
@@ -86,7 +91,8 @@ namespace My3DGame.UI
         //인벤토리 UI 토글
         public void TogglePayerInventoryUI()
         {
-            Debug.Log("TogglePayerInventoryUI");
+            //퀘스트 UI 열려 있거나 UI를 못연다
+            
             ToggleUI(playerInventoryUI.gameObject);
             //창이 닫힐때 이벤트 함수 호출
             if(playerInventoryUI.gameObject.activeSelf == false)
@@ -101,6 +107,8 @@ namespace My3DGame.UI
         //장비 장착창 UI 토글
         public void ToggelPlayerEquipmentUI()
         {
+            //퀘스트 UI 열려 있거나 UI를 못연다
+
             ToggleUI(playerEquipmentUI.gameObject);
             //창이 닫힐때 이벤트 함수 호출
             if (playerEquipmentUI.gameObject.activeSelf == false)
@@ -124,15 +132,40 @@ namespace My3DGame.UI
         {
             if(dialog == null)
             {
+                //대화창 닫기
                 ToggleUI(dialogUI.gameObject);
+                //퀘스트창 의뢰창 열기
+                if(dialogUI._OnCloseUIEvent != null)
+                {
+                    dialogUI._OnCloseUIEvent.Invoke();
+                    //dialogUI._OnCloseUIEvent = null;
+                }
             }
             else
             {
                 if (dialogUI.gameObject.activeSelf == false)
                 {
                     ToggleUI(dialogUI.gameObject);
+                    //퀘스트 의뢰 대화이면 퀘스트 오픈 함수 등록
+                    if(dialog.type == DialogType.Quest)
+                    {
+                        dialogUI._OnCloseUIEvent += ToggleQuestUI;
+                    }
                 }
                 dialogUI.SetDialogue(dialog);
+            }
+        }
+
+        //퀘스트 UI 토글 기능
+        public void ToggleQuestUI()
+        {
+            //인벤토리 UI 열려 있거나, 장착 UI 열려 있으면 UI를 못연다
+
+            ToggleUI(questUI.gameObject);
+            if(questUI.gameObject.activeSelf == true)
+            {
+                //창이 열리면 UI 셋팅
+                questUI.OpenQuestUI();
             }
         }
 
