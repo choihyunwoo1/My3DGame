@@ -136,4 +136,5 @@ MonoBehaviour:
       allowedItems: 
   database: {fileID: 11400000, guid: 1b84be68f1475284490fb60ea18b22bc, type: 2}
   inventoryType: 0
+  _OnUpdateQuest: {fileID: 11400000, guid: 77e557d6c44bc024e8776791d29cf684, type: 2}
   filePath: /Inventory.json

@@ -17,6 +17,9 @@ namespace My3DGame
         
         public ItemDataBaseSO database;                 //아이템 데이터 베이스
         public InventoryType inventoryType;             //인벤토리 타입
+
+        [Header("Broadcasting On")]
+        public UpdateQuestEventChannelSO _OnUpdateQuest;
         #endregion
 
         #region Property
@@ -85,6 +88,12 @@ namespace My3DGame
                     //수량만 추가
                     slot.AddAmount(amount);
                 }
+            }
+
+            //수집 퀘스트 업데이트 체크
+            if (_OnUpdateQuest != null)
+            {
+                _OnUpdateQuest.RaisedEvent(QuestType.Collect, item.id);
             }
 
             return true;

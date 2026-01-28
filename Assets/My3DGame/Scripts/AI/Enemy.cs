@@ -23,6 +23,9 @@ namespace My3DGame.AI
 
         //회전 속도 - Lerp 계수
         [SerializeField] protected float rotateSpeed = 10f;
+
+        [Header("Broadcasting On")]
+        public UpdateQuestEventChannelSO _OnUpdateQuest;
         #endregion
 
         #region Property
@@ -126,6 +129,12 @@ namespace My3DGame.AI
         private void OnDie()
         {
             ChangeState(new DeathState());
+
+            //킬 퀘스트 업데이트 체크
+            if(_OnUpdateQuest != null)
+            {
+                _OnUpdateQuest.RaisedEvent(QuestType.Kill, 0);
+            }
 
             //킬
             Destroy(gameObject, 3f);

@@ -15,4 +15,4 @@ MonoBehaviour:
   _InteractEvent: {fileID: 11400000, guid: 06fda8373ceac7d47bc4c2828ef125f7, type: 2}
   _ToggleInventoryUIEvent: {fileID: 11400000, guid: e045e1d131904b1418a1d5001d286532, type: 2}
   _ToggleEquipmentUIEevent: {fileID: 11400000, guid: 395fe41145a3c954aa781e876f7fef81, type: 2}
-  _ToggleQuestUIEvent: {fileID: 11400000, guid: f26ebf2012a1e3b4baa5f43c8c61bb46, type: 2}
+  _OpenQuestUIEvent: {fileID: 11400000, guid: 661f89adc93749c45be9a1c5a7a296da, type: 2}

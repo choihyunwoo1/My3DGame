@@ -47,7 +47,7 @@
 		<character>1</character>
 		<name>BardHare</name>
 		<sentence>빨리 좀비를 잡아 주세요</sentence>
-		<type>Quest</type>
+		<type>None</type>
 	</Dialog>
 	<Dialog>
 		<number>5</number>
@@ -75,7 +75,7 @@
 		<character>1</character>
 		<name>BardHare</name>
 		<sentence>아직 탄약이 모자라요 더 모아 오세요</sentence>
-		<type>Quest</type>
+		<type>None</type>
 	</Dialog>
 	<Dialog>
 		<number>8</number>

@@ -2688,86 +2688,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4825172340658285421, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852992937754996093, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852992937754996093, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852992937754996093, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852992937754996093, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852992937754996093, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852992937754996093, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6255022466807117293, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
       propertyPath: m_Name
       value: GameHUD
       objectReference: {fileID: 0}
-    - target: {fileID: 6321658666372602241, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6321658666372602241, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6321658666372602241, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6321658666372602241, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6321658666372602241, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6321658666372602241, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8036465692388434782, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
-      propertyPath: _OnSetCurrentQuest
+      propertyPath: _OnGiveupQuest
       value: 
-      objectReference: {fileID: 11400000, guid: ea534afa2513c8e40bbd83facb9c9073, type: 2}
+      objectReference: {fileID: 11400000, guid: b464df175257b1d45a0989209954b2bb, type: 2}
     - target: {fileID: 8908169419851327101, guid: a7593fa98ffe4ca4f8e933efd0670fe7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11506,6 +11434,7 @@ MonoBehaviour:
   attackRange: 2
   attackDelayTime: 2
   rotateSpeed: 10
+  _OnUpdateQuest: {fileID: 11400000, guid: 77e557d6c44bc024e8776791d29cf684, type: 2}
   wayPoints:
   - {fileID: 861713902}
   - {fileID: 319665133}
@@ -21984,6 +21913,61 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2825403755275319640, guid: 21672c7e164aa3442b72d68e88a06db6, type: 3}
   m_PrefabInstance: {fileID: 2014434102}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2023224916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023224918}
+  - component: {fileID: 2023224917}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2023224917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023224916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74b45e43f5ebf542b7bc9129202b79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questObejct: {fileID: 11400000, guid: 7c337039b59da5349922d1940d885842, type: 2}
+  statsObject: {fileID: 11400000, guid: 4f8935f579ca0d041bf88835ff1d3589, type: 2}
+  playerQuests: []
+  _OpenQuestUIEvent: {fileID: 11400000, guid: 661f89adc93749c45be9a1c5a7a296da, type: 2}
+  _OnAcceptQuest: {fileID: 11400000, guid: 16baece77ace82245858b1827154e901, type: 2}
+  _OnGiveupQuest: {fileID: 11400000, guid: b464df175257b1d45a0989209954b2bb, type: 2}
+  _OnUpdateQuest: {fileID: 11400000, guid: 77e557d6c44bc024e8776791d29cf684, type: 2}
+  _OnRewardQuest: {fileID: 11400000, guid: e7ade3e3347d8a94b9ebae42c1ba4bac, type: 2}
+  _ToggleQuestUIEvent: {fileID: 11400000, guid: f26ebf2012a1e3b4baa5f43c8c61bb46, type: 2}
+  _OnSetCurrentQuest: {fileID: 11400000, guid: ea534afa2513c8e40bbd83facb9c9073, type: 2}
+  _OnCompletedQuest: {fileID: 11400000, guid: 950930c957c76fc4997cf7cc8e239eb5, type: 2}
+--- !u!4 &2023224918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023224916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2061761029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24697,7 +24681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 236495212428218406, guid: e86ed848d5a80d945b1aa039b84fe118, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5521003134984341640, guid: e86ed848d5a80d945b1aa039b84fe118, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25301,7 +25285,11 @@ MonoBehaviour:
   _InteractEvent: {fileID: 11400000, guid: 06fda8373ceac7d47bc4c2828ef125f7, type: 2}
   questObejct: {fileID: 11400000, guid: 7c337039b59da5349922d1940d885842, type: 2}
   quests: []
+  _OnAcceptQuest: {fileID: 11400000, guid: 16baece77ace82245858b1827154e901, type: 2}
+  _OnGiveupQuest: {fileID: 11400000, guid: b464df175257b1d45a0989209954b2bb, type: 2}
+  _OnCompletedQuest: {fileID: 11400000, guid: 950930c957c76fc4997cf7cc8e239eb5, type: 2}
   _OnSetCurrentQuest: {fileID: 11400000, guid: ea534afa2513c8e40bbd83facb9c9073, type: 2}
+  _OnRewardQuest: {fileID: 11400000, guid: e7ade3e3347d8a94b9ebae42c1ba4bac, type: 2}
 --- !u!4 &6493268603444665246
 Transform:
   m_ObjectHideFlags: 0
@@ -25780,6 +25768,7 @@ MonoBehaviour:
   attackRange: 2
   attackDelayTime: 2
   rotateSpeed: 10
+  _OnUpdateQuest: {fileID: 11400000, guid: 77e557d6c44bc024e8776791d29cf684, type: 2}
 --- !u!23 &8033063201710887934
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26329,3 +26318,4 @@ SceneRoots:
   - {fileID: 1318964613}
   - {fileID: 1794335838}
   - {fileID: 5986497404834339942}
+  - {fileID: 2023224918}

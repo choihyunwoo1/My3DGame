@@ -2973,7 +2973,7 @@ GameObject:
   - component: {fileID: 856959503293291850}
   - component: {fileID: 8256675875523762936}
   m_Layer: 0
-  m_Name: ExitButton (1)
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3079,7 +3079,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 856959503293291850}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8036465692388434782}
+        m_TargetAssemblyTypeName: My3DGame.UI.QuestUI, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2456693025233431887
 GameObject:
   m_ObjectHideFlags: 0
@@ -3769,7 +3781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6540011009231544178
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3828,6 +3840,10 @@ MonoBehaviour:
       goalIndex: 0
       goalAmount: 0
       currentAmount: 0
+  _OnSetCurrentQuest: {fileID: 11400000, guid: ea534afa2513c8e40bbd83facb9c9073, type: 2}
+  _ToggleQuestUIEvent: {fileID: 11400000, guid: f26ebf2012a1e3b4baa5f43c8c61bb46, type: 2}
+  _OnAcceptQuest: {fileID: 11400000, guid: 16baece77ace82245858b1827154e901, type: 2}
+  _OnGiveupQuest: {fileID: 0}
 --- !u!1 &2887797806197811117
 GameObject:
   m_ObjectHideFlags: 0
@@ -4548,7 +4564,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4633932763373574824}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8036465692388434782}
+        m_TargetAssemblyTypeName: My3DGame.UI.QuestUI, Assembly-CSharp
+        m_MethodName: GiveupQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3295476216367269021
 GameObject:
   m_ObjectHideFlags: 0
@@ -5817,10 +5845,10 @@ RectTransform:
   - {fileID: 5873592205845924102}
   m_Father: {fileID: 7920137363640392777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 76.666664, y: -45}
+  m_SizeDelta: {x: 153.33333, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1574043235368779257
 CanvasRenderer:
@@ -6036,7 +6064,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9008961243758598638}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8036465692388434782}
+        m_TargetAssemblyTypeName: My3DGame.UI.QuestUI, Assembly-CSharp
+        m_MethodName: AcceptQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4195539629295559458
 GameObject:
   m_ObjectHideFlags: 0
@@ -6325,7 +6365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7920137363640392777
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7184,7 +7224,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3951225421015365611}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8036465692388434782}
+        m_TargetAssemblyTypeName: My3DGame.UI.QuestUI, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5157668123734680941
 GameObject:
   m_ObjectHideFlags: 0
@@ -7355,10 +7407,10 @@ RectTransform:
   - {fileID: 3829705244547206879}
   m_Father: {fileID: 7920137363640392777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 423.3333, y: -45}
+  m_SizeDelta: {x: 153.33333, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8274861772125110054
 CanvasRenderer:
@@ -10316,10 +10368,10 @@ RectTransform:
   - {fileID: 1255148727311142776}
   m_Father: {fileID: 7920137363640392777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -45}
+  m_SizeDelta: {x: 153.33333, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6630769682027724623
 CanvasRenderer:

@@ -225,6 +225,10 @@ namespace My3DGame
                 //레벨업 보상 처리
             }
 
+            //스탯 변경시 등록된 함수 호출
+            if (OnChangedStats != null)
+                OnChangedStats.Invoke();
+
             return isLevelup;
         }
 

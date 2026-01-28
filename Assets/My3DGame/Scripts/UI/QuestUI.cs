@@ -35,6 +35,11 @@ namespace My3DGame.UI
 
         [Header("Listening On")]
         public QuestEventChannelSO _OnSetCurrentQuest;
+
+        [Header("Broadcasting On")]
+        public VoidEventChannelSO _ToggleQuestUIEvent;
+        public QuestEventChannelSO _OnAcceptQuest;
+        public QuestEventChannelSO _OnGiveupQuest;
         #endregion
 
         #region Unity Event Method
@@ -48,19 +53,30 @@ namespace My3DGame.UI
         #region Custom Method
         public void SetCurrentQuest(Quest quest)
         {
+            Debug.Log("set quest.number:" + quest.number);
             currentQuest = quest;
         }
 
         //매개변수로 받은 퀘스트로 UI 셋팅
         private void SetQuestUI(Quest quest)
         {
+            Debug.Log("ui quest.number:" + quest.number);
             QuestData questData = questObejct.database[quest.number];
 
             nameText.text = questData.name;
-            descriptionText.text = questData.description;
-
-            goalAmountText.text = quest.questGoal.currentAmount.ToString() + " / "
-                + quest.questGoal.goalAmount.ToString();
+            if(quest.questGoal.IsReached)
+            {
+                descriptionText.text = "Quest Completed!!!";
+                goalAmountText.text = quest.questGoal.goalAmount.ToString() + " / "
+                    + quest.questGoal.goalAmount.ToString();
+            }
+            else
+            {
+                descriptionText.text = questData.description;
+                goalAmountText.text = quest.questGoal.currentAmount.ToString() + " / "
+                    + quest.questGoal.goalAmount.ToString();
+            }
+            
             rewardGoldText.text = questData.rewardGold.ToString();
             rewardExpText.text = questData.rewardExp.ToString();
 
@@ -89,7 +105,7 @@ namespace My3DGame.UI
                     giveupButton.SetActive(true);
                     break;
                 case QusetState.Complete:
-                    okButton.SetActive(false);
+                    okButton.SetActive(true);
                     break;
             }
         }
@@ -108,6 +124,43 @@ namespace My3DGame.UI
                 return;
 
             SetQuestUI(currentQuest);
+        }
+
+        //퀘스트 UI 초기화
+        public void CloseQuestUI()
+        {
+            currentQuest = null;
+            ResetButton();
+        }
+
+        //퀘스트 UI 닫기
+        public void Close()
+        {
+            _ToggleQuestUIEvent.RaisedEvent();
+        }
+
+        //수락 버튼 클릭시
+        public void AcceptQuest()
+        {
+            //선택된 퀘스트를 플레어 퀘스트에 추가한다
+            //npc 퀘스트의 상태를 수락상태로 바꾼다
+            if(currentQuest != null)
+            {
+                _OnAcceptQuest.RaisedEvent(currentQuest);
+            }
+            Close();
+        }
+
+        //포기 버튼
+        public void GiveupQuest()
+        {
+            //선택된 퀘스트를 플레어 퀘스트에 추가한다
+            //npc 퀘스트의 상태를 수락상태로 바꾼다
+            if (currentQuest != null)
+            {
+                _OnGiveupQuest.RaisedEvent(currentQuest);
+            }
+            Close();
         }
         #endregion
     }

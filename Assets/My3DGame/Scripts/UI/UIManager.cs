@@ -47,6 +47,12 @@ namespace My3DGame.UI
             _ToggleActionUIEvent.OnEventRaised -= ToggleActionUI;
             _ToggleQuestUIEvent.OnEventRaised -= ToggleQuestUI;
         }
+
+        private void Start()
+        {
+            //UI 초기화
+            ToggleQuestUI();
+        }
         #endregion
 
         #region Custom Method
@@ -138,7 +144,8 @@ namespace My3DGame.UI
                 if(dialogUI._OnCloseUIEvent != null)
                 {
                     dialogUI._OnCloseUIEvent.Invoke();
-                    //dialogUI._OnCloseUIEvent = null;
+                    //등록된 함수를 모두 제거
+                    dialogUI._OnCloseUIEvent = null;
                 }
             }
             else
@@ -166,6 +173,10 @@ namespace My3DGame.UI
             {
                 //창이 열리면 UI 셋팅
                 questUI.OpenQuestUI();
+            }
+            else
+            {
+                questUI.CloseQuestUI();
             }
         }
 
